@@ -43,6 +43,15 @@ html,body{background:var(--ground);color:var(--ink);font-family:var(--text);
   color:#c8c8c4;font-size:14px;line-height:1.45}
 .nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
 .nav button{flex:1}
+.item{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;
+  background:transparent;border:none;border-bottom:1px solid var(--line);
+  padding:16px 0;cursor:pointer;color:var(--ink);font-family:var(--text)}
+.item:last-child{border-bottom:none}
+.item-n{font-family:var(--display);font-size:22px;color:var(--muted);width:42px;flex:none}
+.item-series{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+.item-hook{display:block;font-size:16px;font-weight:600;line-height:1.35}
+.list-title{font-family:var(--display);font-size:32px;margin-bottom:8px}
 @media print{
   .bar,.hint,.nav{display:none}
   .card{break-after:page;border:none;background:#fff;color:#111}
@@ -54,13 +63,13 @@ html,body{background:var(--ground);color:var(--ink);font-family:var(--text);
 <body>
 <div class="bar">
   <h1>Talk tracks</h1>
+  <button id="all">All 27</button>
   <select id="jump"></select>
   <button id="prev">Prev</button>
   <button id="next">Next</button>
 </div>
 <p class="hint">
-  Say the hook exactly. Talk the rest. Land the last line, then stop.
-  Arrows or J / K to move. Video 1 is the locked take. The rest is from speaker-notes.md.
+  27 videos. Tap one. Say the hook exactly, talk the rest, land the last line, then stop.
 </p>
 <div class="stage"><article class="card" id="card"></article>
   <div class="nav">
@@ -270,7 +279,7 @@ const VIDEOS = [
    land:"I'm not starving myself. I'm just not spending my best hours on digestion."}
 ];
 
-let i = 1; // start on video 2, video 1 is already filmed
+let i = 0;
 const card = document.getElementById('card');
 const jump = document.getElementById('jump');
 
@@ -281,13 +290,28 @@ VIDEOS.forEach((v, idx) => {
   jump.appendChild(o);
 });
 
+function showList(){
+  history.replaceState(null,'','#');
+  card.innerHTML = `<div class="list-title">All 27</div>` + VIDEOS.map((v, idx) =>
+    `<button class="item" type="button" data-i="${idx}">
+      <span class="item-n">${String(v.n).padStart(2,'0')}</span>
+      <span><span class="item-series">${v.series}</span>
+      <span class="item-hook">${v.hook}</span></span>
+    </button>`
+  ).join('');
+  card.querySelectorAll('.item').forEach(btn => {
+    btn.onclick = () => show(Number(btn.dataset.i));
+  });
+  window.scrollTo(0,0);
+}
+
 function show(n){
   i = (n + VIDEOS.length) % VIDEOS.length;
   const v = VIDEOS[i];
   jump.value = String(i);
   const note = v.note ? `<div class="note">${v.note}</div>` : '';
   card.innerHTML = `
-    <div class="meta"><span class="series">${v.series}</span><span class="num">${String(v.n).padStart(2,'0')}</span></div>
+    <div class="meta"><span class="series">${v.series}</span><span class="num">${String(v.n).padStart(2,'0')} / 27</span></div>
     <div class="label">Hook, say exactly</div>
     <div class="hook">${v.hook}</div>
     <div class="label">Talk track</div>
@@ -301,6 +325,7 @@ function show(n){
 
 function next(){ show(i+1); }
 function prev(){ show(i-1); }
+document.getElementById('all').onclick = showList;
 document.getElementById('next').onclick = next;
 document.getElementById('next2').onclick = next;
 document.getElementById('prev').onclick = prev;
@@ -309,10 +334,12 @@ jump.onchange = () => show(Number(jump.value));
 document.addEventListener('keydown', e => {
   if(e.key==='ArrowRight' || e.key==='j' || e.key==='J') next();
   if(e.key==='ArrowLeft' || e.key==='k' || e.key==='K') prev();
+  if(e.key==='Escape') showList();
 });
 const hash = Number(location.hash.slice(1));
 const start = VIDEOS.findIndex(v => v.n === hash);
-show(start >= 0 ? start : 1);
+if (start >= 0) show(start);
+else showList();
 </script>
 </body>
 </html>
