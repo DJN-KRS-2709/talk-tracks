@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 1 Masterclass · layout for Lisa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #07162C;
+    --ink: #12213A;
+    --paper: #F6F1E8;
+    --card: #FFFbf5;
+    --line: #E4D9C8;
+    --blue: #2F6FED;
+    --blue-soft: #E8EEFC;
+    --coral: #E85D4C;
+    --muted: #5C6574;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Outfit, system-ui, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 36px 24px 80px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: Fraunces, Georgia, serif;
+    font-weight: 650;
+    font-size: clamp(32px, 5vw, 46px);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 58ch;
+    margin-bottom: 28px;
+  }
+  .tldr {
+    background: var(--navy);
+    color: #F6F1E8;
+    border-radius: 18px;
+    padding: 26px 28px;
+    margin-bottom: 32px;
+  }
+  .tldr .k {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #9BB4F0;
+    margin-bottom: 10px;
+  }
+  .tldr p { font-size: 17px; line-height: 1.5; }
+  .tldr p + p { margin-top: 10px; }
+  h2 {
+    font-family: Fraunces, Georgia, serif;
+    font-size: 22px;
+    font-weight: 650;
+    margin: 8px 0 14px;
+  }
+  .beats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  .beat {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 14px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .n {
+    font-family: Fraunces, Georgia, serif;
+    font-size: 22px;
+    color: var(--blue);
+    line-height: 1.1;
+  }
+  .beat h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .beat p { font-size: 14.5px; color: var(--muted); }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .card h3 {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .card ul { padding-left: 18px; font-size: 14.5px; }
+  .card li + li { margin-top: 6px; }
+  .lines { margin-bottom: 28px; }
+  .line {
+    background: var(--blue-soft);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 12px 12px 0;
+    padding: 12px 16px;
+    font-size: 15.5px;
+    margin-bottom: 8px;
+  }
+  .note {
+    font-size: 13.5px;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+  .slack {
+    margin-top: 28px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .slack-h {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .slack-h strong { font-size: 14px; }
+  button {
+    margin-left: auto;
+    background: var(--blue);
+    color: #fff;
+    border: 0;
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  button.done { background: #1F7A4C; }
+  #slackcopy {
+    white-space: pre-wrap;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 14px;
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="eyebrow">Internal · for Lisa · promo plan</div>
+    <h1>Week 1 Masterclass, rough layout</h1>
+    <p class="lede">Free session. No slide deck. Dejan live-builds a product in front of the room, they use it on their phones, then sales takes the close. Use this as direction, not a final rundown.</p>
+
+    <div class="tldr">
+      <div class="k">TLDR</div>
+      <p>They watch a blank chat turn into a live product they can try. Hypothesis in, session out. Then we catch the thing AI does quietly (it starts playing doctor), put a test on it, and ship that. The room scans a QR, uses the app, and we look at what they actually typed.</p>
+      <p>Promise of the hour: you can move from a bet to something real, with a gate, before you write the PRD.</p>
+    </div>
+
+    <h2>Shape of the hour</h2>
+    <div class="beats">
+      <div class="beat">
+        <div class="n">01</div>
+        <div>
+          <h3>The story</h3>
+          <p>Dejan, product builder, longevity, morning workout. Friends cannot find the time. They think they need an hour and a gym, so they do nothing.</p>
+        </div>
+      </div>
+      <div class="beat">
+        <div class="n">02</div>
+        <div>
+          <h3>Write the bet, then build it</h3>
+          <p>Hypothesis on screen. Agent builds. Not “make me an app.” Time, energy, equipment in. One session they can start now. Tiny test, real evidence.</p>
+        </div>
+      </div>
+      <div class="beat">
+        <div class="n">03</div>
+        <div>
+          <h3>It works. Then it doesn’t.</h3>
+          <p>Hotel, dumbbells: a real workout. Then “my back is starting to hurt.” It plays doctor. That is the part you do not ship.</p>
+        </div>
+      </div>
+      <div class="beat">
+        <div class="n">04</div>
+        <div>
+          <h3>Evals, not a Confluence page</h3>
+          <p>If they ask about pain, don’t play doctor. Hand them to a clinician. A test you can rerun tomorrow, then it goes live.</p>
+        </div>
+      </div>
+      <div class="beat">
+        <div class="n">05</div>
+        <div>
+          <h3>Phones out</h3>
+          <p>QR on the live product. Dejan scans first (calisthenics park). Then the back prompt, now blocked. Then the room uses it with whatever they have.</p>
+        </div>
+      </div>
+      <div class="beat">
+        <div class="n">06</div>
+        <div>
+          <h3>What the room asked for</h3>
+          <p>A live board of the asks, grouped into signals. Not a survey. Then Dejan stops. Keep pumping. Sales does the commercial.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>What they leave with</h3>
+        <ul>
+          <li>They used a live product on their own phone</li>
+          <li>Hypothesis as the product, not a 40-slide deck</li>
+          <li>Why evals belong before ship (AI fails quiet)</li>
+          <li>A feedback loop: look at what people typed</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What this is not</h3>
+        <ul>
+          <li>Not a webinar with a deck on the projector</li>
+          <li>Not “watch me click around a finished app”</li>
+          <li>Dejan does not do the sales pitch</li>
+          <li>Blueprint and next step sit in the close after he leaves</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Lines you can steal</h2>
+    <div class="lines">
+      <div class="line">Don’t write the PRD. Build the bet.</div>
+      <div class="line">From a blank chat to a live URL you actually use.</div>
+      <div class="line">Same prompt. It used to play doctor. Now it doesn’t.</div>
+      <div class="line">You don’t guess the need. You look at what they typed.</div>
+    </div>
+
+    <p class="note">Working title in the room: QuickFit (one session from the time, energy, and equipment you have right now). Fine to keep generic in ads (“live-build a product, then use it”) and name it on the day. Format is live Zoom, Cursor on the share, phones for the second half.</p>
+
+    <div class="slack">
+      <div class="slack-h">
+        <strong>Slack reply you can paste</strong>
+        <button type="button" id="copy">Copy</button>
+      </div>
+      <div id="slackcopy">Hey Lisa, yes. Rough layout for the Week 1 Masterclass (direction for promo, not a locked rundown):
+
+No deck. I live-build in front of them. Blank chat to a product they can try on their phones.
+
+Arc:
+1. Story: busy people think they need an hour and a gym, so they skip.
+2. Hypothesis on screen, then we actually build it.
+3. It works (hotel, dumbbells). Then “my back hurts” and it plays doctor. That’s the part you don’t ship.
+4. We add an eval, run it, put it live. A test you can rerun, not a Confluence page.
+5. QR, phones out. They use it. Then a live board of what people actually typed.
+
+I stop. Keep pumping. You all take the close.
+
+Steal-able lines: “Don’t write the PRD. Build the bet.” / “From a blank chat to a live URL you actually use.”
+
+Happy to jump on a quick call if you want hooks vs. this shape.</div>
+    </div>
+  </div>
+<script>
+document.getElementById("copy").addEventListener("click", async () => {
+  const t = document.getElementById("slackcopy").innerText;
+  await navigator.clipboard.writeText(t);
+  const b = document.getElementById("copy");
+  b.textContent = "Copied";
+  b.classList.add("done");
+  setTimeout(() => { b.textContent = "Copy"; b.classList.remove("done"); }, 1600);
+});
+</script>
+</body>
+</html>
