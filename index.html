@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talk tracks, @djn.krstic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#F3F2EF; --muted:#9A9A96; --line:#2A2A28;
+  --ground:#0E0E0E; --card:#161614;
+  --accent:#2B59FF; --accent-ink:#9DB2FF;
+  --display:'Anton',sans-serif; --text:'Inter',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--ground);color:var(--ink);font-family:var(--text);
+  -webkit-font-smoothing:antialiased;min-height:100%}
+.bar{position:sticky;top:0;z-index:20;background:var(--ground);
+  border-bottom:2px solid var(--accent);padding:12px 18px;
+  display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.bar h1{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-right:auto}
+.bar button,.bar select{font-family:var(--text);font-weight:600;font-size:13px;
+  background:#1c1c1c;color:#eee;border:1px solid #444;border-radius:999px;
+  padding:8px 14px;cursor:pointer}
+.bar button:hover{border-color:var(--accent)}
+.bar .on{background:var(--accent);border-color:var(--accent);color:#fff}
+.hint{max-width:820px;margin:16px auto 0;padding:0 22px;color:var(--muted);font-size:13px;line-height:1.5}
+.stage{max-width:820px;margin:0 auto;padding:28px 22px 120px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 28px 32px}
+.meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:18px}
+.series{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink)}
+.num{font-family:var(--display);font-size:28px;color:var(--muted)}
+.label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin:22px 0 10px}
+.hook{font-family:var(--display);font-size:clamp(28px,5vw,44px);line-height:1.05;
+  text-transform:uppercase;letter-spacing:.01em}
+.track p{font-size:clamp(18px,2.6vw,22px);line-height:1.45;margin:0 0 16px;font-weight:500}
+.land{font-size:clamp(20px,3vw,26px);font-weight:800;line-height:1.3;
+  border-top:1px solid var(--line);padding-top:18px;margin-top:8px}
+.note{margin-top:18px;padding:12px 14px;background:#1c1c1c;border-radius:10px;
+  color:#c8c8c4;font-size:14px;line-height:1.45}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+.nav button{flex:1}
+@media print{
+  .bar,.hint,.nav{display:none}
+  .card{break-after:page;border:none;background:#fff;color:#111}
+  body{background:#fff;color:#111}
+  .hook,.land,.track p{color:#111}
+}
+</style>
+</head>
+<body>
+<div class="bar">
+  <h1>Talk tracks</h1>
+  <select id="jump"></select>
+  <button id="prev">Prev</button>
+  <button id="next">Next</button>
+</div>
+<p class="hint">
+  Say the hook exactly. Talk the rest. Land the last line, then stop.
+  Arrows or J / K to move. Video 1 is the locked take. The rest is from speaker-notes.md.
+</p>
+<div class="stage"><article class="card" id="card"></article>
+  <div class="nav">
+    <button id="prev2">Prev</button>
+    <button id="next2">Next</button>
+  </div>
+</div>
+<script>
+const VIDEOS = [
+  {n:1, series:"Positioning", hook:"Everyone invests in everything but the asset they live in.",
+   track:[
+     "Let's be honest. We pour money into everything: cars, stocks, property, the next course, the next gadget, clothes. Into everything. Except the one asset we actually live in every single day: ourselves.",
+     "I'm a product executive. The whole job is thinking strategically about things with immediate impact, and things that pay off in 5, 10, 20, 30 years. For years I ran all of that thinking on my portfolio and my career, and gave almost none of it to my health, my energy, my head. The stuff that actually lets me enjoy any of it.",
+     "I flipped it. Now I treat all of this as one portfolio: body, mind, money, career. Same rules, same horizons, same patience.",
+     "Here's the real why: none of it is the point. The point is being free and being there for my family. That's what this whole account is."
+   ],
+   land:"Invest in yourself, because that is the only asset that pays for all the others."},
+  {n:2, series:"Origin story", hook:"I was raised to want one thing: a job that would never let me go. In 2008, it let me go.",
+   track:[
+     "So, a bit about me. We came to Germany in '88, I was six. Hanover. The next year I started school, almost seven, in a language I didn't speak a single word of.",
+     "And the script back then was simple, everyone around me believed it. Get the safe job. Stay at the company. Keep your head down. Be grateful. That was a good life.",
+     "Then 2008 hit. The company made cuts. And that safe plan turned out to be the riskiest one going, because none of it was ever actually mine.",
+     "So my wife and I made a call: treat it as the opening, not the ending. We left Hanover, family, friends, everything we knew, and moved to Berlin. Music industry first. Then product, and that's where it finally clicked. Honestly, it took me twenty years of trial and error to get it.",
+     "And that's the whole reason this account exists. What took me twenty years shouldn't take you twenty."
+   ],
+   land:"The job was never the asset. I was. And so are you. Invest in the one thing nobody can ever lay off.",
+   note:"Say 2008 out loud. Only use \"it let me go\" if you were personally let go. If you watched it happen to others: a job for life. In 2008 I watched that idea die in an afternoon."},
+  {n:3, series:"Executive Protocol", hook:"I have six hours of back-to-back meetings today. Here's when I train.",
+   track:[
+     "Here's my calendar today. Look at it, it's a wall. Six hours, back to back. On a day like this everyone says the same thing: I'll train tomorrow.",
+     "So here's the trick. I don't leave it to the end of the day, because the day always wins. I drop one block in early and it's non-negotiable, same status as a board meeting. Short, hard, done.",
+     "Because I know exactly what skipping it costs me: the 3pm crash, the evening where I'm useless, the decisions I make tired and pay for later."
+   ],
+   land:"That block is the one meeting I never move."},
+  {n:4, series:"Ask a CPO", hook:"The thing that got me to CPO was not being the best product person in the room.",
+   track:[
+     "Little secret. The thing that got me to CPO? It wasn't being the best product person in the room. Honestly, most of the time I wasn't. There were people way sharper than me on the craft.",
+     "What actually moved me up was different. Judgment when nobody had the answer. Getting a room full of people who disagreed to actually move together. And owning the call when it could blow up.",
+     "At some point you stop being the person with the best ideas, and you become the person who makes everyone else better. That's the whole jump."
+   ],
+   land:"Seniority isn't more product skill. It's more responsibility for how it turns out."},
+  {n:5, series:"Product Thinking", hook:"I wrote OKRs for my bloodwork. My doctor thought it was insane. Then the numbers moved.",
+   track:[
+     "So I did something my doctor thought was genuinely insane. I wrote OKRs, actual objectives and key results, for my own bloodwork.",
+     "Think about it: at work we never improve what we don't measure. So why would my body be the one exception? I picked one objective, get my metabolic health right, and a couple of key results. Real numbers, real targets. Not vibes.",
+     "My doctor kind of laughed at me. Then we ran the follow-up bloods a few months later, and they moved. The right way."
+   ],
+   land:"Your body is the most important product you'll ever manage. You can't improve what you don't instrument."},
+  {n:6, series:"Executive Protocol", hook:"You don't need 90 minutes. I get a real session done in 28.",
+   track:[
+     "Everyone thinks a workout only counts if it's an hour-plus. And that belief is exactly why most people do nothing, because who actually has 90 minutes on a Tuesday?",
+     "I don't. So here's what I really do: 28 minutes. Big compound lifts, supersets, phone in the bag, almost no rest. In and out.",
+     "Is it perfect? No. But it happens. Every time. And a 28-minute session that actually happens beats the perfect 90-minute one you keep skipping."
+   ],
+   land:"The best workout is the one that still happens at 9pm on a bad day."},
+  {n:7, series:"Compounding", hook:"Health is the only asset you can't buy back once you've spent it.",
+   track:[
+     "Think about everything you own. You can rebuild a portfolio. You can restart a career. You can sell a flat, sell a company, start again from scratch.",
+     "There's exactly one asset you can't buy back, your health. No exit, no resale, no insurance payout that hands you the decade back.",
+     "So when I talk about 30-year horizons, money, career, all of it, this is the one sitting underneath all of them. Because none of the freedom I'm building means anything if I'm not healthy enough to actually enjoy it with my family."
+   ],
+   land:"Everyone invests in everything but the asset they live in. Don't be everyone."},
+  {n:8, series:"Ask a CPO", hook:"How I'd break into product management in 2026 if I were starting from zero.",
+   track:[
+     "If I had to break into product today, from zero, here's exactly what I'd do, and it's not another certificate.",
+     "Everyone's got the certificate now. It signals nothing. Instead I'd go build one small, real thing, anything, and then document the thinking. Not the feature. The decision: what problem, what I bet, what I learned.",
+     "Then I'd get that in front of one hiring manager directly. Not a job portal. A person."
+   ],
+   land:"Nobody hires a PM for what they know. They hire you for how you decide."},
+  {n:9, series:"Product Thinking", hook:"Your body has a backlog. Most people are grooming the wrong tickets.",
+   track:[
+     "Your body has a backlog. Same as any product. And most people pour all their energy into the wrong tickets.",
+     "We chase the loud, visible stuff, the six-pack, the quick fix. Meanwhile the tickets that actually run the whole system, sleep, strength, the boring basics, sit at the bottom, untouched.",
+     "In product you prioritize by impact, not by what's shiny. Do that with your body. Fix the platform first. The rest is just polish on top."
+   ],
+   land:"Stop shipping features on a broken platform."},
+  {n:10, series:"Executive Protocol", hook:"The gym isn't the hard part. The 7pm exec dinner is.",
+   track:[
+     "Honestly? The gym is the easy part. One hour, you control everything.",
+     "The hard part is 7pm. The dinner. The client, the team, the wine going round the table, come on, just one. That's where the plan actually lives or dies.",
+     "So I've got a few boring rules for that table: what I order before I even sit down, the drink swap nobody notices, and knowing exactly when I leave. Boring, but that's what protects the next morning."
+   ],
+   land:"Discipline at 7pm is what makes 6am even possible."},
+  {n:11, series:"Ask a CPO", hook:"I've hired dozens of PMs. Here's what actually gets you the offer.",
+   track:[
+     "I've hired dozens of PMs. And I'll tell you, the polished resume is almost never the thing that gets someone the offer.",
+     "What actually does it is three things. Judgment: how you think when there's no clean answer. Communication: can you take something messy and make it simple. And ownership: do you act like it's yours.",
+     "There's usually one moment in the interview where I see it. Someone hits a hard question and instead of bluffing, they just reason out loud, honestly. That's the hire."
+   ],
+   land:"I'm not hiring the smartest person in the room. I'm hiring the one I'd trust with a bad quarter."},
+  {n:12, series:"Product Thinking", hook:"Your fitness plan didn't fail on discipline. It shipped as a v1 with no metrics.",
+   track:[
+     "Your fitness plan didn't fail because you're lazy. Let me take that guilt right off the table.",
+     "It failed because you shipped a v1 with no metrics. No baseline, no tracking, no way to even know if it was working. Of course you quit. You were flying blind.",
+     "Fix it like a product. Pick two or three numbers that actually matter, track them, and then iterate. Tweak, measure, tweak, instead of blowing the whole thing up every January."
+   ],
+   land:"You can't improve what you don't instrument."},
+  {n:13, series:"Compounding", hook:"Two things I'm buying that pay out in 30 years, not three.",
+   track:[
+     "Most of what people buy is designed to pay off in about three months. The dopamine, the gadget, the hype stock. Fast in, fast gone.",
+     "I'm more interested in two things that pay out in thirty years. One's financial, boring, long-hold: real estate and index funds, the stuff that quietly compounds while I ignore it. The other's my health, strength and sleep, the infrastructure that decides whether I'm actually around and able in thirty years.",
+     "And really, both are the same bet. Both are me buying freedom, and time with my family, later, by being patient now."
+   ],
+   land:"I'm not trying to get rich fast. I'm trying to still be here to spend it."},
+  {n:14, series:"Fuel", hook:"If I could keep only one supplement, it'd be the cheapest one on the shelf.",
+   track:[
+     "Everyone wants the exotic one, the tub with the cool label and the big promises. Mine costs about fifteen euros and it's been studied to death for thirty years. Creatine.",
+     "The protocol's stupidly simple. No loading, no cycling, no timing games. Most people do great on five grams a day. I actually run higher, ten to fifteen, because it's dirt cheap and I'm past forty, where hanging onto muscle matters even more.",
+     "It's the most researched supplement there is, and the boring truth is it just works: more strength, better recovery, and when I'm fried or short on sleep, my head holds up a bit better too.",
+     "I take a fair few things, but if you made me drop all of them except one, this is the one I'd keep."
+   ],
+   land:"Boring and proven beats exciting and hopeful. Every time."},
+  {n:15, series:"Fuel", hook:"I take fourteen supplements a day. Most of them, you don't need.",
+   track:[
+     "Full honesty, my stack is big. Around fourteen things a day. But I'd never tell you to copy it, because they are not all equal, and most people need about four.",
+     "Tier one is the stuff with real evidence behind it: creatine, vitamin D3 with K2, omega-3, and magnesium for sleep. If you only ever take those four, you've got most of the benefit.",
+     "Tier two is recovery and sleep, glycine, zinc, ashwagandha. Nice to have, not essential. And tier three is my personal longevity experiments, the NAD+, the urolithin A, the stuff I'm basically testing on myself. I take them, but I'm honest that the evidence there is thinner.",
+     "So please don't copy my shelf. Start with the four that are proven, and earn the rest."
+   ],
+   land:"A big stack isn't a flex. Take the proven few, and be honest about the rest."},
+  {n:16, series:"Fuel", hook:"I don't count calories. I count one number.",
+   track:[
+     "I don't track calories. I find it miserable and I never stick to it. But there's one number I do keep an eye on. Protein.",
+     "The reason's simple: muscle is what keeps you strong, upright and independent as you age. It's basically longevity currency. I aim high, around 2.5 grams per kilo, which is roughly 200 to 230 grams a day for me.",
+     "And here's the bit most people get backwards: the leaner you get, the more protein you actually need, not less. Your body guards muscle harder when there's barely any fat to burn. I sit around 8 to 10% body fat, so for me protein is completely non-negotiable.",
+     "I eat it in a tight window too, first meal at noon, so it's big 40 to 50 gram hits across a few meals. Keep it mostly whole food and the rest sorts itself out. One number, not thirty."
+   ],
+   land:"Protein first. Muscle is the retirement account nobody tells you to fund."},
+  {n:17, series:"Fuel", hook:"I don't have the discipline to diet. So I built defaults instead.",
+   track:[
+     "People assume I've got iron discipline. I really don't. What I have is defaults, decisions I made once so I don't have to make them again at 7pm when I'm tired.",
+     "Same few breakfasts. A default order at the restaurant. The good stuff already in the fridge, so the easy choice is also the decent one. I'm not resisting temptation all day, I just removed most of it.",
+     "Willpower runs out by evening. A default doesn't."
+   ],
+   land:"Don't rely on discipline. Design it out of the equation."},
+  {n:18, series:"Sunday", hook:"Every Sunday is burger day in our house. And no, we don't feel guilty.",
+   track:[
+     "People are surprised when the health guy says Sunday is burger day. But here's the thing, it's a burger we make from scratch. Our own buns, good lean meat, real ingredients. Not a sad diet version, an actually amazing burger.",
+     "Because this was never about restriction. Eighty percent of the week is dialed in precisely so the other twenty can be this: the whole family around the table, no guilt, no rules.",
+     "That balance is the entire point. If your plan can't survive a Sunday burger with your kids, it's the wrong plan."
+   ],
+   land:"Discipline all week is what buys you the burger on Sunday.",
+   note:"Kids' faces off-camera. Film from behind, hands only, or skip the shot."},
+  {n:19, series:"Sunday", hook:"My kids begged to go to McDonald's. Once.",
+   track:[
+     "We do burger day every Sunday, all homemade. And for a while my kids kept asking to go to McDonald's. The toy, the hype, all their friends going.",
+     "So one day, we went. They took a couple of bites, looked at me, and basically said: yeah, ours are better. Can we just have the Sunday burgers again?",
+     "And that was the whole win. They didn't quit the junk because I lectured them. They quit because the better version was already waiting at home."
+   ],
+   land:"You don't win with rules. You win by making the good thing the one they actually want.",
+   note:"Kids' faces off-camera."},
+  {n:20, series:"Sunday", hook:"I make Neapolitan pizza at home. It's basically a product problem.",
+   track:[
+     "I'm a bit obsessed with Neapolitan pizza. Proper dough, long slow ferment, a screaming hot oven, sixty to ninety seconds and it's done.",
+     "And honestly it scratches the exact same itch as my job. It's a system. You control the variables, hydration, time, temperature, you measure, you change one thing, you run it again next weekend. It's iteration you can eat.",
+     "Took me months of mediocre pizzas to get here. Same as anything good, it's just reps."
+   ],
+   land:"The thing you fall in love with at home is usually the thing you're great at, at work."},
+  {n:21, series:"Sunday", hook:"The best ten minutes of my day cost me a very expensive coffee habit.",
+   track:[
+     "I'm a full-on coffee nerd and I've made peace with it. Here's the ritual. I weigh eighteen grams of beans into little tubes ahead of time and keep them in the fridge so they stay fresh.",
+     "Morning comes, I pull one tube, grind it fresh in the single-dose grinder, pull the shot on the La Marzocco, steam the milk, and yes, I do the latte art. Every time.",
+     "But the real reason isn't the coffee. It's that I make two, and I sit with my wife before the day grabs us. Ten quiet minutes, just us, to start the day. That's the actual ritual."
+   ],
+   land:"Build one small ritual that's just for the people you love. Protect it like a meeting."},
+  {n:22, series:"Longevity", hook:"Cardio makes you live longer. Lifting makes you enjoy the longer life.",
+   track:[
+     "Here's how I split it in my head. Cardio is for length, lifting is for quality. The cardio keeps you alive longer, the weights make sure you can actually enjoy those extra years.",
+     "And the length part isn't a vibe. Your cardio fitness, your VO2 max, is one of the strongest predictors of how long you'll live there is. In some studies, low fitness is a bigger risk than smoking.",
+     "So I do both, on purpose. Cardio so I'm here in thirty years. Weights so I'm still strong enough to pick up my grandkids when I am."
+   ],
+   land:"Train for both. Add years with the cardio, add life to them with the iron."},
+  {n:23, series:"Longevity", hook:"I don't have a favorite cardio. I have four.",
+   track:[
+     "People think cardio means one boring thing. The treadmill, staring at a wall. That's exactly why they quit.",
+     "I rotate a few, on purpose. A proper VO2 max run to push the ceiling. The Norwegian 4x4, four hard four-minute intervals, when I want the biggest bang for my time. Easy Zone 2 to build the base. And just walking, a lot, every single day. Different tools, same engine.",
+     "The best cardio isn't the optimal one. It's the one you'll actually still be doing next year."
+   ],
+   land:"Variety isn't cheating. It's how you make it last."},
+  {n:24, series:"Longevity", hook:"The most underrated training I do is just walking.",
+   track:[
+     "Everyone's chasing the hardest, sweatiest workout. Meanwhile the thing that's moved my health the most is embarrassingly simple. Walking. A lot of it.",
+     "It's easy enough that it actually happens every day. It doesn't wreck me for the next session. And it stacks up quietly: calls on the move, walks with the family, one long one on the weekend.",
+     "The flashy stuff gets the attention. The boring, consistent stuff gets the results."
+   ],
+   land:"You don't need more intensity. You need more days you showed up."},
+  {n:25, series:"Longevity", hook:"One number predicts your lifespan better than your cholesterol.",
+   track:[
+     "If I could get you to track one health number, it wouldn't be your weight, and it wouldn't be your cholesterol. It'd be your VO2 max. Basically, how fit your heart and lungs really are.",
+     "In one huge study it predicted early death as well as, or better than, the classic risk factors, and there was no upper limit. The fitter you were, the longer you lived, full stop.",
+     "The good news: you can move it at almost any age. I train it directly, once or twice a week, a hard VO2 max run plus the Norwegian 4x4 intervals, with easy Zone 2 underneath. Keep showing up and the number climbs."
+   ],
+   land:"Don't just watch your weight. Watch the number that actually predicts your life."},
+  {n:26, series:"Longevity", hook:"The single most efficient cardio workout has a name. It's Norwegian.",
+   track:[
+     "If you've only got time for one hard cardio session a week, do this one. It's called the Norwegian 4x4, and it's about as evidence-backed as cardio gets for raising your VO2 max.",
+     "The whole thing's simple. Four rounds of four minutes hard, the kind of hard where talking isn't really happening, then three minutes easy between them. That's it. Under half an hour including the warm-up.",
+     "I do it once a week, max. It's brutal, but it moves the one number that actually predicts how long you'll live, faster than almost anything else I've tried."
+   ],
+   land:"You don't need more hours. You need four times four, once a week."},
+  {n:27, series:"Fuel", hook:"I don't eat before noon. It's not about weight.",
+   track:[
+     "People assume I skip breakfast to stay lean. That's not really it. My first meal is around noon, and the main reason is simpler: my mornings are sharper when I'm not digesting.",
+     "I train fasted, get my hardest thinking done, and then I eat, big, protein first, in a tighter window through the afternoon and evening. It's less about the fasting and more about not scattering my energy across the whole day.",
+     "And to be clear, it's not magic and it's not for everyone. It's just a default that happens to fit how I work and how I like to eat."
+   ],
+   land:"I'm not starving myself. I'm just not spending my best hours on digestion."}
+];
+
+let i = 1; // start on video 2, video 1 is already filmed
+const card = document.getElementById('card');
+const jump = document.getElementById('jump');
+
+VIDEOS.forEach((v, idx) => {
+  const o = document.createElement('option');
+  o.value = idx;
+  o.textContent = String(v.n).padStart(2,'0') + '  ' + v.series;
+  jump.appendChild(o);
+});
+
+function show(n){
+  i = (n + VIDEOS.length) % VIDEOS.length;
+  const v = VIDEOS[i];
+  jump.value = String(i);
+  const note = v.note ? `<div class="note">${v.note}</div>` : '';
+  card.innerHTML = `
+    <div class="meta"><span class="series">${v.series}</span><span class="num">${String(v.n).padStart(2,'0')}</span></div>
+    <div class="label">Hook, say exactly</div>
+    <div class="hook">${v.hook}</div>
+    <div class="label">Talk track</div>
+    <div class="track">${v.track.map(p => `<p>${p}</p>`).join('')}</div>
+    <div class="label">Land it</div>
+    <div class="land">${v.land}</div>
+    ${note}`;
+  history.replaceState(null,'','#'+v.n);
+  window.scrollTo(0,0);
+}
+
+function next(){ show(i+1); }
+function prev(){ show(i-1); }
+document.getElementById('next').onclick = next;
+document.getElementById('next2').onclick = next;
+document.getElementById('prev').onclick = prev;
+document.getElementById('prev2').onclick = prev;
+jump.onchange = () => show(Number(jump.value));
+document.addEventListener('keydown', e => {
+  if(e.key==='ArrowRight' || e.key==='j' || e.key==='J') next();
+  if(e.key==='ArrowLeft' || e.key==='k' || e.key==='K') prev();
+});
+const hash = Number(location.hash.slice(1));
+const start = VIDEOS.findIndex(v => v.n === hash);
+show(start >= 0 ? start : 1);
+</script>
+</body>
+</html>
