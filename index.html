@@ -39,6 +39,8 @@ html,body{background:var(--ground);color:var(--ink);font-family:var(--text);
 .overlay-box{background:#0E0E0E;border:2px solid var(--accent);border-radius:12px;
   padding:18px 20px;margin-bottom:4px}
 .overlay-box.end{border-color:#fff}
+.overlay{font-family:var(--display);font-size:clamp(26px,4.6vw,40px);line-height:1.08;
+  text-transform:uppercase;letter-spacing:.01em;color:#fff}
 .track p{font-size:clamp(18px,2.6vw,22px);line-height:1.45;margin:0 0 16px;font-weight:500}
 .land{font-size:clamp(20px,3vw,26px);font-weight:800;line-height:1.3;
   border-top:1px solid var(--line);padding-top:18px;margin-top:8px}
@@ -82,6 +84,7 @@ html,body{background:var(--ground);color:var(--ink);font-family:var(--text);
 </div>
 <script>
 const END_CTA = "SAVE, SEND<br>OR FOLLOW<br>FOR MORE";
+const VIDEOS = [
   {n:1, series:"Positioning", overlay:"What is your main asset?", hook:"Everyone invests in everything but the asset they live in.",
    track:[
      "Let's be honest. We pour money into everything: cars, stocks, property, the next course, the next gadget, clothes. Into everything. Except the one asset we actually live in every single day: ourselves.",
