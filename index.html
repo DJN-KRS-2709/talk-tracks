@@ -36,6 +36,9 @@ html,body{background:var(--ground);color:var(--ink);font-family:var(--text);
   color:var(--accent);margin:22px 0 10px}
 .hook{font-family:var(--display);font-size:clamp(28px,5vw,44px);line-height:1.05;
   text-transform:uppercase;letter-spacing:.01em}
+.overlay-box{background:#0E0E0E;border:2px solid var(--accent);border-radius:12px;
+  padding:18px 20px;margin-bottom:4px}
+.overlay-box.end{border-color:#fff}
 .track p{font-size:clamp(18px,2.6vw,22px);line-height:1.45;margin:0 0 16px;font-weight:500}
 .land{font-size:clamp(20px,3vw,26px);font-weight:800;line-height:1.3;
   border-top:1px solid var(--line);padding-top:18px;margin-top:8px}
@@ -63,13 +66,13 @@ html,body{background:var(--ground);color:var(--ink);font-family:var(--text);
 <body>
 <div class="bar">
   <h1>Talk tracks</h1>
-  <button id="all">All 27</button>
+  <button id="all">All</button>
   <select id="jump"></select>
   <button id="prev">Prev</button>
   <button id="next">Next</button>
 </div>
 <p class="hint">
-  27 videos. Tap one. Say the hook exactly, talk the rest, land the last line, then stop.
+  Tap one. First-frame overlay on screen (don't say it). Then say the hook from this script, talk the rest, land the last line. Last 2s: black end card, don't say that either. Spoken words always come from this page. Never from someone else's Reel.
 </p>
 <div class="stage"><article class="card" id="card"></article>
   <div class="nav">
@@ -78,8 +81,8 @@ html,body{background:var(--ground);color:var(--ink);font-family:var(--text);
   </div>
 </div>
 <script>
-const VIDEOS = [
-  {n:1, series:"Positioning", hook:"Everyone invests in everything but the asset they live in.",
+const END_CTA = "SAVE, SEND<br>OR FOLLOW<br>FOR MORE";
+  {n:1, series:"Positioning", overlay:"What is your main asset?", hook:"Everyone invests in everything but the asset they live in.",
    track:[
      "Let's be honest. We pour money into everything: cars, stocks, property, the next course, the next gadget, clothes. Into everything. Except the one asset we actually live in every single day: ourselves.",
      "I'm a product executive. The whole job is thinking strategically about things with immediate impact, and things that pay off in 5, 10, 20, 30 years. For years I ran all of that thinking on my portfolio and my career, and gave almost none of it to my health, my energy, my head. The stuff that actually lets me enjoy any of it.",
@@ -87,7 +90,7 @@ const VIDEOS = [
      "Here's the real why: none of it is the point. The point is being free and being there for my family. That's what this whole account is."
    ],
    land:"Invest in yourself, because that is the only asset that pays for all the others."},
-  {n:2, series:"Origin story", hook:"I was raised to want one thing: a job that would never let me go. In 2008, it let me go.",
+  {n:2, series:"Origin story", overlay:"What if the safe job isn't?", hook:"I was raised to want one thing: a job that would never let me go. In 2008, it let me go.",
    track:[
      "So, a bit about me. We came to Germany in '88, I was six. Hanover. The next year I started school, almost seven, in a language I didn't speak a single word of.",
      "And the script back then was simple, everyone around me believed it. Get the safe job. Stay at the company. Keep your head down. Be grateful. That was a good life.",
@@ -97,84 +100,84 @@ const VIDEOS = [
    ],
    land:"The job was never the asset. I was. And so are you. Invest in the one thing nobody can ever lay off.",
    note:"Say 2008 out loud. Only use \"it let me go\" if you were personally let go. If you watched it happen to others: a job for life. In 2008 I watched that idea die in an afternoon."},
-  {n:3, series:"Executive Protocol", hook:"I have six hours of back-to-back meetings today. Here's when I train.",
+  {n:3, series:"Executive Protocol", overlay:"When do you actually train?", hook:"I have six hours of back-to-back meetings today. Here's when I train.",
    track:[
      "Here's my calendar today. Look at it, it's a wall. Six hours, back to back. On a day like this everyone says the same thing: I'll train tomorrow.",
      "So here's the trick. I don't leave it to the end of the day, because the day always wins. I drop one block in early and it's non-negotiable, same status as a board meeting. Short, hard, done.",
      "Because I know exactly what skipping it costs me: the 3pm crash, the evening where I'm useless, the decisions I make tired and pay for later."
    ],
    land:"That block is the one meeting I never move."},
-  {n:4, series:"Ask a CPO", hook:"The thing that got me to CPO was not being the best product person in the room.",
+  {n:4, series:"Ask a CPO", overlay:"What actually gets you promoted?", hook:"The thing that got me to CPO was not being the best product person in the room.",
    track:[
      "Little secret. The thing that got me to CPO? It wasn't being the best product person in the room. Honestly, most of the time I wasn't. There were people way sharper than me on the craft.",
      "What actually moved me up was different. Judgment when nobody had the answer. Getting a room full of people who disagreed to actually move together. And owning the call when it could blow up.",
      "At some point you stop being the person with the best ideas, and you become the person who makes everyone else better. That's the whole jump."
    ],
    land:"Seniority isn't more product skill. It's more responsibility for how it turns out."},
-  {n:5, series:"Product Thinking", hook:"I wrote OKRs for my bloodwork. My doctor thought it was insane. Then the numbers moved.",
+  {n:5, series:"Product Thinking", overlay:"OKRs... for bloodwork?", hook:"I wrote OKRs for my bloodwork. My doctor thought it was insane. Then the numbers moved.",
    track:[
      "So I did something my doctor thought was genuinely insane. I wrote OKRs, actual objectives and key results, for my own bloodwork.",
      "Think about it: at work we never improve what we don't measure. So why would my body be the one exception? I picked one objective, get my metabolic health right, and a couple of key results. Real numbers, real targets. Not vibes.",
      "My doctor kind of laughed at me. Then we ran the follow-up bloods a few months later, and they moved. The right way."
    ],
    land:"Your body is the most important product you'll ever manage. You can't improve what you don't instrument."},
-  {n:6, series:"Executive Protocol", hook:"You don't need 90 minutes. I get a real session done in 28.",
+  {n:6, series:"Executive Protocol", overlay:"How long does a real session take?", hook:"You don't need 90 minutes. I get a real session done in 28.",
    track:[
      "Everyone thinks a workout only counts if it's an hour-plus. And that belief is exactly why most people do nothing, because who actually has 90 minutes on a Tuesday?",
      "I don't. So here's what I really do: 28 minutes. Big compound lifts, supersets, phone in the bag, almost no rest. In and out.",
      "Is it perfect? No. But it happens. Every time. And a 28-minute session that actually happens beats the perfect 90-minute one you keep skipping."
    ],
    land:"The best workout is the one that still happens at 9pm on a bad day."},
-  {n:7, series:"Compounding", hook:"Health is the only asset you can't buy back once you've spent it.",
+  {n:7, series:"Compounding", overlay:"Which asset can't you buy back?", hook:"Health is the only asset you can't buy back once you've spent it.",
    track:[
      "Think about everything you own. You can rebuild a portfolio. You can restart a career. You can sell a flat, sell a company, start again from scratch.",
      "There's exactly one asset you can't buy back, your health. No exit, no resale, no insurance payout that hands you the decade back.",
      "So when I talk about 30-year horizons, money, career, all of it, this is the one sitting underneath all of them. Because none of the freedom I'm building means anything if I'm not healthy enough to actually enjoy it with my family."
    ],
    land:"Everyone invests in everything but the asset they live in. Don't be everyone."},
-  {n:8, series:"Ask a CPO", hook:"How I'd break into product management in 2026 if I were starting from zero.",
+  {n:8, series:"Ask a CPO", overlay:"How would I break in today?", hook:"How I'd break into product management in 2026 if I were starting from zero.",
    track:[
      "If I had to break into product today, from zero, here's exactly what I'd do, and it's not another certificate.",
      "Everyone's got the certificate now. It signals nothing. Instead I'd go build one small, real thing, anything, and then document the thinking. Not the feature. The decision: what problem, what I bet, what I learned.",
      "Then I'd get that in front of one hiring manager directly. Not a job portal. A person."
    ],
    land:"Nobody hires a PM for what they know. They hire you for how you decide."},
-  {n:9, series:"Product Thinking", hook:"Your body has a backlog. Most people are grooming the wrong tickets.",
+  {n:9, series:"Product Thinking", overlay:"What's on your body's backlog?", hook:"Your body has a backlog. Most people are grooming the wrong tickets.",
    track:[
      "Your body has a backlog. Same as any product. And most people pour all their energy into the wrong tickets.",
      "We chase the loud, visible stuff, the six-pack, the quick fix. Meanwhile the tickets that actually run the whole system, sleep, strength, the boring basics, sit at the bottom, untouched.",
      "In product you prioritize by impact, not by what's shiny. Do that with your body. Fix the platform first. The rest is just polish on top."
    ],
    land:"Stop shipping features on a broken platform."},
-  {n:10, series:"Executive Protocol", hook:"The gym isn't the hard part. The 7pm exec dinner is.",
+  {n:10, series:"Executive Protocol", overlay:"Where do most plans actually die?", hook:"The gym isn't the hard part. The 7pm exec dinner is.",
    track:[
      "Honestly? The gym is the easy part. One hour, you control everything.",
      "The hard part is 7pm. The dinner. The client, the team, the wine going round the table, come on, just one. That's where the plan actually lives or dies.",
      "So I've got a few boring rules for that table: what I order before I even sit down, the drink swap nobody notices, and knowing exactly when I leave. Boring, but that's what protects the next morning."
    ],
    land:"Discipline at 7pm is what makes 6am even possible."},
-  {n:11, series:"Ask a CPO", hook:"I've hired dozens of PMs. Here's what actually gets you the offer.",
+  {n:11, series:"Ask a CPO", overlay:"What actually gets you the offer?", hook:"I've hired dozens of PMs. Here's what actually gets you the offer.",
    track:[
      "I've hired dozens of PMs. And I'll tell you, the polished resume is almost never the thing that gets someone the offer.",
      "What actually does it is three things. Judgment: how you think when there's no clean answer. Communication: can you take something messy and make it simple. And ownership: do you act like it's yours.",
      "There's usually one moment in the interview where I see it. Someone hits a hard question and instead of bluffing, they just reason out loud, honestly. That's the hire."
    ],
    land:"I'm not hiring the smartest person in the room. I'm hiring the one I'd trust with a bad quarter."},
-  {n:12, series:"Product Thinking", hook:"Your fitness plan didn't fail on discipline. It shipped as a v1 with no metrics.",
+  {n:12, series:"Product Thinking", overlay:"Why did your plan fail?", hook:"Your fitness plan didn't fail on discipline. It shipped as a v1 with no metrics.",
    track:[
      "Your fitness plan didn't fail because you're lazy. Let me take that guilt right off the table.",
      "It failed because you shipped a v1 with no metrics. No baseline, no tracking, no way to even know if it was working. Of course you quit. You were flying blind.",
      "Fix it like a product. Pick two or three numbers that actually matter, track them, and then iterate. Tweak, measure, tweak, instead of blowing the whole thing up every January."
    ],
    land:"You can't improve what you don't instrument."},
-  {n:13, series:"Compounding", hook:"Two things I'm buying that pay out in 30 years, not three.",
+  {n:13, series:"Compounding", overlay:"What still pays in 30 years?", hook:"Two things I'm buying that pay out in 30 years, not three.",
    track:[
      "Most of what people buy is designed to pay off in about three months. The dopamine, the gadget, the hype stock. Fast in, fast gone.",
      "I'm more interested in two things that pay out in thirty years. One's financial, boring, long-hold: real estate and index funds, the stuff that quietly compounds while I ignore it. The other's my health, strength and sleep, the infrastructure that decides whether I'm actually around and able in thirty years.",
      "And really, both are the same bet. Both are me buying freedom, and time with my family, later, by being patient now."
    ],
    land:"I'm not trying to get rich fast. I'm trying to still be here to spend it."},
-  {n:14, series:"Fuel", hook:"If I could keep only one supplement, it'd be the cheapest one on the shelf.",
+  {n:14, series:"Fuel", overlay:"One supplement. Which one?", hook:"If I could keep only one supplement, it'd be the cheapest one on the shelf.",
    track:[
      "Everyone wants the exotic one, the tub with the cool label and the big promises. Mine costs about fifteen euros and it's been studied to death for thirty years. Creatine.",
      "The protocol's stupidly simple. No loading, no cycling, no timing games. Most people do great on five grams a day. I actually run higher, ten to fifteen, because it's dirt cheap and I'm past forty, where hanging onto muscle matters even more.",
@@ -182,7 +185,7 @@ const VIDEOS = [
      "I take a fair few things, but if you made me drop all of them except one, this is the one I'd keep."
    ],
    land:"Boring and proven beats exciting and hopeful. Every time."},
-  {n:15, series:"Fuel", hook:"I take fourteen supplements a day. Most of them, you don't need.",
+  {n:15, series:"Fuel", overlay:"Do you actually need 14?", hook:"I take fourteen supplements a day. Most of them, you don't need.",
    track:[
      "Full honesty, my stack is big. Around fourteen things a day. But I'd never tell you to copy it, because they are not all equal, and most people need about four.",
      "Tier one is the stuff with real evidence behind it: creatine, vitamin D3 with K2, omega-3, and magnesium for sleep. If you only ever take those four, you've got most of the benefit.",
@@ -190,7 +193,7 @@ const VIDEOS = [
      "So please don't copy my shelf. Start with the four that are proven, and earn the rest."
    ],
    land:"A big stack isn't a flex. Take the proven few, and be honest about the rest."},
-  {n:16, series:"Fuel", hook:"I don't count calories. I count one number.",
+  {n:16, series:"Fuel", overlay:"I only count one number.", hook:"I don't count calories. I count one number.",
    track:[
      "I don't track calories. I find it miserable and I never stick to it. But there's one number I do keep an eye on. Protein.",
      "The reason's simple: muscle is what keeps you strong, upright and independent as you age. It's basically longevity currency. I aim high, around 2.5 grams per kilo, which is roughly 200 to 230 grams a day for me.",
@@ -198,14 +201,14 @@ const VIDEOS = [
      "I eat it in a tight window too, first meal at noon, so it's big 40 to 50 gram hits across a few meals. Keep it mostly whole food and the rest sorts itself out. One number, not thirty."
    ],
    land:"Protein first. Muscle is the retirement account nobody tells you to fund."},
-  {n:17, series:"Fuel", hook:"I don't have the discipline to diet. So I built defaults instead.",
+  {n:17, series:"Fuel", overlay:"What if you have no discipline?", hook:"I don't have the discipline to diet. So I built defaults instead.",
    track:[
      "People assume I've got iron discipline. I really don't. What I have is defaults, decisions I made once so I don't have to make them again at 7pm when I'm tired.",
      "Same few breakfasts. A default order at the restaurant. The good stuff already in the fridge, so the easy choice is also the decent one. I'm not resisting temptation all day, I just removed most of it.",
      "Willpower runs out by evening. A default doesn't."
    ],
    land:"Don't rely on discipline. Design it out of the equation."},
-  {n:18, series:"Sunday", hook:"Every Sunday is burger day in our house. And no, we don't feel guilty.",
+  {n:18, series:"Sunday", overlay:"The health guy eats burgers?", hook:"Every Sunday is burger day in our house. And no, we don't feel guilty.",
    track:[
      "People are surprised when the health guy says Sunday is burger day. But here's the thing, it's a burger we make from scratch. Our own buns, good lean meat, real ingredients. Not a sad diet version, an actually amazing burger.",
      "Because this was never about restriction. Eighty percent of the week is dialed in precisely so the other twenty can be this: the whole family around the table, no guilt, no rules.",
@@ -213,7 +216,7 @@ const VIDEOS = [
    ],
    land:"Discipline all week is what buys you the burger on Sunday.",
    note:"Kids' faces off-camera. Film from behind, hands only, or skip the shot."},
-  {n:19, series:"Sunday", hook:"My kids begged to go to McDonald's. Once.",
+  {n:19, series:"Sunday", overlay:"They asked for McDonald's. Once.", hook:"My kids begged to go to McDonald's. Once.",
    track:[
      "We do burger day every Sunday, all homemade. And for a while my kids kept asking to go to McDonald's. The toy, the hype, all their friends going.",
      "So one day, we went. They took a couple of bites, looked at me, and basically said: yeah, ours are better. Can we just have the Sunday burgers again?",
@@ -221,62 +224,195 @@ const VIDEOS = [
    ],
    land:"You don't win with rules. You win by making the good thing the one they actually want.",
    note:"Kids' faces off-camera."},
-  {n:20, series:"Sunday", hook:"I make Neapolitan pizza at home. It's basically a product problem.",
+  {n:20, series:"Sunday", overlay:"Is pizza a product problem?", hook:"I make Neapolitan pizza at home. It's basically a product problem.",
    track:[
      "I'm a bit obsessed with Neapolitan pizza. Proper dough, long slow ferment, a screaming hot oven, sixty to ninety seconds and it's done.",
      "And honestly it scratches the exact same itch as my job. It's a system. You control the variables, hydration, time, temperature, you measure, you change one thing, you run it again next weekend. It's iteration you can eat.",
      "Took me months of mediocre pizzas to get here. Same as anything good, it's just reps."
    ],
    land:"The thing you fall in love with at home is usually the thing you're great at, at work."},
-  {n:21, series:"Sunday", hook:"The best ten minutes of my day cost me a very expensive coffee habit.",
+  {n:21, series:"Sunday", overlay:"Why is the coffee so expensive?", hook:"The best ten minutes of my day cost me a very expensive coffee habit.",
    track:[
      "I'm a full-on coffee nerd and I've made peace with it. Here's the ritual. I weigh eighteen grams of beans into little tubes ahead of time and keep them in the fridge so they stay fresh.",
      "Morning comes, I pull one tube, grind it fresh in the single-dose grinder, pull the shot on the La Marzocco, steam the milk, and yes, I do the latte art. Every time.",
      "But the real reason isn't the coffee. It's that I make two, and I sit with my wife before the day grabs us. Ten quiet minutes, just us, to start the day. That's the actual ritual."
    ],
    land:"Build one small ritual that's just for the people you love. Protect it like a meeting."},
-  {n:22, series:"Longevity", hook:"Cardio makes you live longer. Lifting makes you enjoy the longer life.",
+  {n:22, series:"Longevity", overlay:"Live longer, or enjoy it more?", hook:"Cardio makes you live longer. Lifting makes you enjoy the longer life.",
    track:[
      "Here's how I split it in my head. Cardio is for length, lifting is for quality. The cardio keeps you alive longer, the weights make sure you can actually enjoy those extra years.",
      "And the length part isn't a vibe. Your cardio fitness, your VO2 max, is one of the strongest predictors of how long you'll live there is. In some studies, low fitness is a bigger risk than smoking.",
      "So I do both, on purpose. Cardio so I'm here in thirty years. Weights so I'm still strong enough to pick up my grandkids when I am."
    ],
    land:"Train for both. Add years with the cardio, add life to them with the iron."},
-  {n:23, series:"Longevity", hook:"I don't have a favorite cardio. I have four.",
+  {n:23, series:"Longevity", overlay:"How many kinds of cardio?", hook:"I don't have a favorite cardio. I have four.",
    track:[
      "People think cardio means one boring thing. The treadmill, staring at a wall. That's exactly why they quit.",
      "I rotate a few, on purpose. A proper VO2 max run to push the ceiling. The Norwegian 4x4, four hard four-minute intervals, when I want the biggest bang for my time. Easy Zone 2 to build the base. And just walking, a lot, every single day. Different tools, same engine.",
      "The best cardio isn't the optimal one. It's the one you'll actually still be doing next year."
    ],
    land:"Variety isn't cheating. It's how you make it last."},
-  {n:24, series:"Longevity", hook:"The most underrated training I do is just walking.",
+  {n:24, series:"Longevity", overlay:"What's the most underrated training?", hook:"The most underrated training I do is just walking.",
    track:[
      "Everyone's chasing the hardest, sweatiest workout. Meanwhile the thing that's moved my health the most is embarrassingly simple. Walking. A lot of it.",
      "It's easy enough that it actually happens every day. It doesn't wreck me for the next session. And it stacks up quietly: calls on the move, walks with the family, one long one on the weekend.",
      "The flashy stuff gets the attention. The boring, consistent stuff gets the results."
    ],
    land:"You don't need more intensity. You need more days you showed up."},
-  {n:25, series:"Longevity", hook:"One number predicts your lifespan better than your cholesterol.",
+  {n:25, series:"Longevity", overlay:"One number predicts your lifespan.", hook:"One number predicts your lifespan better than your cholesterol.",
    track:[
      "If I could get you to track one health number, it wouldn't be your weight, and it wouldn't be your cholesterol. It'd be your VO2 max. Basically, how fit your heart and lungs really are.",
      "In one huge study it predicted early death as well as, or better than, the classic risk factors, and there was no upper limit. The fitter you were, the longer you lived, full stop.",
      "The good news: you can move it at almost any age. I train it directly, once or twice a week, a hard VO2 max run plus the Norwegian 4x4 intervals, with easy Zone 2 underneath. Keep showing up and the number climbs."
    ],
    land:"Don't just watch your weight. Watch the number that actually predicts your life."},
-  {n:26, series:"Longevity", hook:"The single most efficient cardio workout has a name. It's Norwegian.",
+  {n:26, series:"Longevity", overlay:"The most efficient cardio has a name.", hook:"The single most efficient cardio workout has a name. It's Norwegian.",
    track:[
      "If you've only got time for one hard cardio session a week, do this one. It's called the Norwegian 4x4, and it's about as evidence-backed as cardio gets for raising your VO2 max.",
      "The whole thing's simple. Four rounds of four minutes hard, the kind of hard where talking isn't really happening, then three minutes easy between them. That's it. Under half an hour including the warm-up.",
      "I do it once a week, max. It's brutal, but it moves the one number that actually predicts how long you'll live, faster than almost anything else I've tried."
    ],
    land:"You don't need more hours. You need four times four, once a week."},
-  {n:27, series:"Fuel", hook:"I don't eat before noon. It's not about weight.",
+  {n:27, series:"Fuel", overlay:"Why no breakfast?", hook:"I don't eat before noon. It's not about weight.",
    track:[
      "People assume I skip breakfast to stay lean. That's not really it. My first meal is around noon, and the main reason is simpler: my mornings are sharper when I'm not digesting.",
      "I train fasted, get my hardest thinking done, and then I eat, big, protein first, in a tighter window through the afternoon and evening. It's less about the fasting and more about not scattering my energy across the whole day.",
      "And to be clear, it's not magic and it's not for everyone. It's just a default that happens to fit how I work and how I like to eat."
    ],
-   land:"I'm not starving myself. I'm just not spending my best hours on digestion."}
+   land:"I'm not starving myself. I'm just not spending my best hours on digestion."},
+  {n:28, series:"Focus", overlay:"Four hours. No meetings. Why?", hook:"I block four hours every morning. No meetings. That's not a perk, it's the job.",
+   track:[
+     "Let's be honest. My calendar would eat the whole day if I let it. So I don't. Four hours, morning, no meetings. Same status as a board meeting. Nobody moves it. Including me.",
+     "I'm a morning person. That's not a personality quiz, it's just when my head actually works. The creative stuff, the hard product thinking, the calls that could blow up: that's where they live. Not at 4pm after six hours of other people's priorities.",
+     "I've got another block I never move, the gym. This is the other one. Training keeps the machine running. These four hours are what the machine is for."
+   ],
+   land:"Protect the hours when you're actually good. The rest of the day can be meetings.",
+   note:"Video 3 is the gym block. Don't retell the 28-minute workout. Confirm four hours is a real typical block before you film."},
+  {n:29, series:"AI, Applied", overlay:"Don't learn AI. Do this instead.", hook:"Don't learn AI. Give it one job you already hate.",
+   track:[
+     "Everyone tries to build a second brain in week one. Twenty tools, a prompt library, a new identity. That's why they quit.",
+     "I build with this stuff every day, and I still tell people the same thing: pick one boring job. The weekly update. The meeting recap. The first draft you keep rewriting. One job, done every time, then earn the next one.",
+     "You don't need to become an AI person. You need one workflow that actually runs on a Tuesday."
+   ],
+   land:"Mastery isn't a stack. It's one workflow you actually run."},
+  {n:30, series:"Focus", overlay:"Stop copying the 5am club.", hook:"Everyone copies a 5am routine. Find when YOU'RE actually good.",
+   track:[
+     "There's a decent pile of research on this: your brain has a peak, and it isn't the same hour for everyone. Morning people peak in the morning. Night people don't. Fighting that is expensive.",
+     "I'm a morning person, so I took the mornings. Four hours, no meetings. If you're not a morning person, do not steal my 6am. Steal the method: notice when your head is actually clear, then defend that window like a meeting.",
+     "The 5am crowd is selling you their chronotype as a moral system. It isn't. It's just when they happen to be good."
+   ],
+   land:"The routine isn't the point. Knowing your peak, and refusing to give it away, is."},
+  {n:31, series:"AI, Applied", overlay:"Where should AI never go?", hook:"I don't use AI in my best four hours. I use it so those four hours stay mine.",
+   track:[
+     "The morning is for judgment. The product calls, the hard thinking, the thing only I can do. I don't spend it prompting.",
+     "What I do spend it on, without AI, is the actual work. The brief, the catch-up, the first draft of the weekly, the \"what did I miss overnight\": that's the stuff an agent can fire before I sit down. So I walk into those four hours already caught up, not doing inbox archaeology with a fresh brain.",
+     "That's the whole trick. AI doesn't replace the peak. It keeps the peak from getting eaten."
+   ],
+   land:"AI isn't the thinking. It's what you fire so you can think."},
+  {n:32, series:"Focus", overlay:"Your morning isn't the problem.", hook:"Everyone optimises their morning routine. Your 3pm is what's actually killing you.",
+   track:[
+     "Here's the thing. Most people have a peak and a trough in the same day. If you're a morning person, that trough is the afternoon. Cold plunge, journal, 5am club, whatever: none of it saves you if you put the hard work at 3pm.",
+     "I used to treat 3pm like it was still morning. Strategy, the messy product call, the thing that needed a head. Then I'd wonder why it felt like wading.",
+     "So I flipped it. Mornings get the work that needs me sharp. Afternoons get the easy meetings, the email, the stuff that can survive a trough. The routine was never the leak. The calendar was."
+   ],
+   land:"Stop upgrading the morning. Fix where you put the hard work.",
+   note:"Don't retell Video 3's 3pm crash from skipping the gym. This is when you do cognitive work, not training."},
+  {n:33, series:"AI, Applied", overlay:"Who writes my morning brief?", hook:"An agent writes my morning brief. I still make every call.",
+   track:[
+     "I'm not \"using ChatGPT.\" I gave a system a job with a deadline. It reads Slack, Gmail, my calendar, Drive. 07:45 Berlin. Top three priorities, meeting prep, what I actually have to answer.",
+     "I still decide. It doesn't run my day. It just means I don't spend peak hours reconstructing the last 24 hours by hand.",
+     "That's the difference between a chat window and a workflow. A chat is a toy. A job with a time and a definition of done is a tool."
+   ],
+   land:"Stop chatting with it. Give it a job, a time, and a definition of done.",
+   note:"Only say this as a daily ritual if the brief is actually live. If it's built but not daily, keep \"I built\" and drop any \"every morning I get\" language."},
+  {n:34, series:"Focus", overlay:"What's the most expensive meeting?", hook:"The most expensive meeting on my calendar is the one in my best thinking hours.",
+   track:[
+     "A 15-minute standup at 9am looks cheap. It isn't. There's a name for this: attention residue. You leave the meeting and part of your head is still in the meeting. You don't snap back.",
+     "So that \"quick sync\" doesn't cost 15 minutes. It costs the morning. The four-hour block is gone the second you let someone else's agenda into it.",
+     "I moved everything that isn't deep work out of those hours. Not because I'm precious. Because I ran the math once, and a cheap meeting in an expensive hour is a terrible deal."
+   ],
+   land:"A cheap meeting in an expensive hour is the worst deal on the calendar."},
+  {n:35, series:"AI, Applied", overlay:"Why did judgment get expensive?", hook:"AI made the easy PM work cheap. That's why judgment got expensive.",
+   track:[
+     "Anyone can draft a PRD now. That's fine. I still hire for the thing the model can't do: the call when it could blow up, reading the room, knowing when the draft is wrong.",
+     "Harvard and BCG put GPT-4 in front of a bunch of consultants. Faster and better when the task sat inside what the model is good at. Worse when they trusted it past that line. That's a junior. Useful. Not the owner.",
+     "So the job didn't disappear. The cheap part got cheaper. The expensive part, judgment, is the whole job now."
+   ],
+   land:"I'm not hiring the person who writes the fastest PRD. I'm hiring the one who knows which paragraphs to kill."},
+  {n:36, series:"Focus", overlay:"Can you calendar creativity?", hook:"I don't wait to feel creative. I put it on the calendar.",
+   track:[
+     "People treat creativity like weather. It shows up, or it doesn't. For me it shows up at 7am, almost on cue, because I kept showing up at 7am.",
+     "I'm a morning person. The creative work and the hard thinking are the same hours. I don't claim that's true for you. I claim this: if you protect the hours when you're actually good, the work gets better. That's less mystical than we pretend.",
+     "Mood is a terrible operating system. A block on the calendar isn't."
+   ],
+   land:"Creativity isn't a personality. It's a protected block."},
+  {n:37, series:"AI, Applied", overlay:"Why wait on engineering?", hook:"I used to wait on engineering for every prototype. I don't wait anymore.",
+   track:[
+     "The CPO job used to mean waiting. Write the spec, get in the queue, see the thing in three sprints, find out the idea was wrong. Slow, expensive, and everyone was doing their job.",
+     "I don't wait on that first version now. I spin it up, see if the idea survives contact with a real screen, then bring the team in on something we can actually argue about. That's product speed, not a hobby, and it's not me doing their job.",
+     "AI prototyping is a product skill now. If you can describe it, you can put a rough version in someone's hands this week."
+   ],
+   land:"If you can describe the product, you can put a version of it in someone's hands this week.",
+   note:"Keep this as product speed, not a slight on your teams."},
+  {n:38, series:"Focus", overlay:"When does the morning actually start?", hook:"The four-hour morning starts the night before.",
+   track:[
+     "You already know what five hours of sleep does to a workout. It does the same thing to the four hours. The block is only as good as the night in front of it.",
+     "I'm not giving you a sleep lecture. I'm saying the \"quick thing\" at 10pm is stealing tomorrow's best work. The meeting you take late, the scroll, the one more email: that's not extra. It's a withdrawal from the morning.",
+     "Protect the night, or the calendar block is just theatre."
+   ],
+   land:"Protect the night, or don't bother protecting the morning."},
+  {n:39, series:"Focus", overlay:"Worst way to start a day?", hook:"I used to warm up with email. I was spending my best brain on other people's lists.",
+   track:[
+     "First thing I used to do: inbox. Felt responsible. Felt like work. It was just me handing my peak to whoever emailed at midnight.",
+     "My afternoon can belong to everyone else. That's the job. The morning belongs to the work that actually needs me: the thinking, the product calls, the thing that doesn't happen if I'm already depleted from other people's lists.",
+     "Warm up with email and you've spent the best four hours before you started."
+   ],
+   land:"Other people's priorities can wait until your peak is spent."},
+  {n:40, series:"Positioning", overlay:"Did the gym get me the job?", hook:"The gym didn't get me the CPO job. It built the person who could do it.",
+   track:[
+     "People think I lift to look a certain way. That's the smallest part of it. Twenty-five years under a barbell taught me the actual skill: you put the work in, you wait, you don't cheat the process, and then one day you look in the mirror and the thing actually moved.",
+     "Dedication, discipline, patience, self-control. You learn those because the body is honest. It doesn't care about your mood. Skip the work and you see it. Do the work for years and you see that too.",
+     "And then I took that into the job. Same muscle: stay with a hard problem longer than is comfortable. Don't blow up the plan every January. Don't need the result this week. Same thing at home. Same character, three rooms.",
+     "The physique is a side effect. The person is the point."
+   ],
+   land:"The barbell was never about the body. It was the first place I learned I could actually change something.",
+   note:"Umbrella for Videos 40 to 45. Don't retell Video 3 or Video 22."},
+  {n:41, series:"Character", overlay:"Who's more honest: body or work?", hook:"Skip the work and the body is honest. Work will lie to you for years.",
+   track:[
+     "Here's the thing about the gym. You can't fake it. Miss three weeks and you feel it. The weights don't move. The mirror doesn't negotiate. Your body is the most honest feedback loop I've ever had.",
+     "Work is not like that. You can look busy for a year and still be going nowhere. Meetings, decks, a title. The body doesn't do politics.",
+     "So I trust that loop. If I can stay with something when the feedback is this blunt, I can stay with a product, a team, a hard quarter. The gym was the first place that wouldn't let me lie to myself."
+   ],
+   land:"I didn't need a coach for character. I needed a weight that didn't care how I felt."},
+  {n:42, series:"Character", overlay:"Where did I learn patience?", hook:"I didn't learn patience at work. I learned it waiting for my body to change.",
+   track:[
+     "Nobody looks different after one good week. That's the whole lesson. You train, you eat, you wait. Months. Years. Then one day it actually shows.",
+     "At work we pretend everything should pay off this quarter. I stopped buying that, because I'd already seen the other version: slow, boring, and then suddenly you can't not see it.",
+     "Patience isn't sitting around. It's doing the unsexy work long enough that the result has no choice. Same muscle for a product, a career, a 30-year horizon."
+   ],
+   land:"If you need the result this week, you're not building. You're decorating."},
+  {n:43, series:"Character", overlay:"What if you don't feel like it?", hook:"The most useful thing the gym taught me is showing up when I don't feel like it.",
+   track:[
+     "Determination sounds big. In practice it's tiny. It's Tuesday, you're tired, the session is not going to be pretty, and you go anyway.",
+     "Do that for 25 years and you stop arguing with yourself. You just go. That is the whole skill.",
+     "Then a hard week at work shows up, or a messy decision, or a plan that isn't fun anymore. Same move. You don't wait to feel ready. You start."
+   ],
+   land:"Motivation is a mood. Showing up is a character trait."},
+  {n:44, series:"Character", overlay:"Same person in three rooms?", hook:"Same character, three rooms: the gym, the job, and home.",
+   track:[
+     "People split themselves. Gym persona, work persona, then someone else at the table. I don't. The same person walks into all three.",
+     "If I can stay patient under a barbell, I can stay patient with a problem at work. And I can stay patient at home, which is the one that actually matters.",
+     "That's the private-life transfer. Not a lecture. Just: the discipline isn't a costume you put on for the office. If it only works in one room, it isn't character. It's performance."
+   ],
+   land:"If it doesn't show up at the table, it was never yours.",
+   note:"No kids' faces. Hands, backs, over-the-shoulder, or skip the family shot."},
+  {n:45, series:"Character", overlay:"What was my first dashboard?", hook:"The first dashboard I ever trusted was a training log.",
+   track:[
+     "Before OKRs, before product metrics, I had a notebook. What I lifted. How I felt. Whether it moved. Ugly, honest, every session.",
+     "That's where I learned you can see progress if you actually look. Effort, patience, then the number goes up. Not vibes. A log.",
+     "At work I did the same thing later: write it down, watch it, don't gaslight yourself. The gym just got there first."
+   ],
+   land:"If you can't see it, you're guessing. I stopped guessing in the gym."}
 ];
 
 let i = 0;
@@ -292,11 +428,11 @@ VIDEOS.forEach((v, idx) => {
 
 function showList(){
   history.replaceState(null,'','#');
-  card.innerHTML = `<div class="list-title">All 27</div>` + VIDEOS.map((v, idx) =>
+  card.innerHTML = `<div class="list-title">All ${VIDEOS.length}</div>` + VIDEOS.map((v, idx) =>
     `<button class="item" type="button" data-i="${idx}">
       <span class="item-n">${String(v.n).padStart(2,'0')}</span>
       <span><span class="item-series">${v.series}</span>
-      <span class="item-hook">${v.hook}</span></span>
+      <span class="item-hook">${v.overlay || v.hook}</span></span>
     </button>`
   ).join('');
   card.querySelectorAll('.item').forEach(btn => {
@@ -311,13 +447,17 @@ function show(n){
   jump.value = String(i);
   const note = v.note ? `<div class="note">${v.note}</div>` : '';
   card.innerHTML = `
-    <div class="meta"><span class="series">${v.series}</span><span class="num">${String(v.n).padStart(2,'0')} / 27</span></div>
+    <div class="meta"><span class="series">${v.series}</span><span class="num">${String(v.n).padStart(2,'0')} / ${VIDEOS.length}</span></div>
+    <div class="label">On-screen overlay, first 2s, don't say it</div>
+    <div class="overlay-box"><div class="overlay">${v.overlay}</div></div>
     <div class="label">Hook, say exactly</div>
     <div class="hook">${v.hook}</div>
     <div class="label">Talk track</div>
     <div class="track">${v.track.map(p => `<p>${p}</p>`).join('')}</div>
     <div class="label">Land it</div>
     <div class="land">${v.land}</div>
+    <div class="label">End card, last 2s, don't say it</div>
+    <div class="overlay-box end"><div class="overlay">${END_CTA}</div></div>
     ${note}`;
   history.replaceState(null,'','#'+v.n);
   window.scrollTo(0,0);
