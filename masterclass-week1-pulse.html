@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 1 Masterclass · Pulse templates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #07162C;
+    --ink: #12213A;
+    --paper: #F6F1E8;
+    --card: #FFFbf5;
+    --line: #E4D9C8;
+    --blue: #2F6FED;
+    --blue-soft: #E8EEFC;
+    --muted: #5C6574;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Outfit, system-ui, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 760px; margin: 0 auto; padding: 36px 24px 80px; }
+  .eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 10px;
+  }
+  h1 {
+    font-family: Fraunces, Georgia, serif; font-weight: 650;
+    font-size: clamp(32px, 5vw, 46px); line-height: 1.12;
+    letter-spacing: -0.02em; margin-bottom: 14px;
+  }
+  .lede { font-size: 18px; color: var(--muted); max-width: 58ch; margin-bottom: 28px; }
+  .tldr {
+    background: var(--navy); color: #F6F1E8; border-radius: 18px;
+    padding: 26px 28px; margin-bottom: 28px;
+  }
+  .tldr .k {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: #9BB4F0; margin-bottom: 10px;
+  }
+  .tldr p { font-size: 16px; line-height: 1.5; }
+  .tldr p + p { margin-top: 10px; }
+  h2 {
+    font-family: Fraunces, Georgia, serif; font-size: 22px;
+    font-weight: 650; margin: 8px 0 14px;
+  }
+  .pulse {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 16px; padding: 22px 22px 18px; margin-bottom: 14px;
+  }
+  .pulse .id {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 6px;
+  }
+  .pulse h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+  .meta { display: grid; grid-template-columns: 140px 1fr; gap: 6px 12px; font-size: 14.5px; margin-bottom: 14px; }
+  .meta dt { color: var(--muted); font-weight: 600; }
+  .q {
+    background: var(--blue-soft); border-left: 3px solid var(--blue);
+    border-radius: 0 12px 12px 0; padding: 12px 16px; margin: 10px 0 12px;
+    font-size: 16px; font-weight: 600;
+  }
+  .opts { list-style: none; margin: 0 0 12px; }
+  .opts li {
+    background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 14px; margin-bottom: 6px; font-size: 15px;
+  }
+  .opts li span { color: var(--blue); font-weight: 700; margin-right: 8px; }
+  .when { font-size: 14.5px; color: var(--muted); }
+  .when b { color: var(--ink); }
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 18px; margin-bottom: 14px;
+  }
+  .card h3 {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 8px;
+  }
+  .card ul { padding-left: 18px; font-size: 14.5px; }
+  .card li + li { margin-top: 6px; }
+  .paste {
+    background: #0c0c0d; color: #e8e8ea; border-radius: 12px;
+    padding: 14px 16px; margin: 12px 0 0; position: relative;
+  }
+  .paste .pl {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #7aa7ff; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .paste pre {
+    white-space: pre-wrap; word-break: break-word;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 13px; line-height: 1.55;
+  }
+  .copy {
+    margin-left: auto; background: #2563eb; color: #fff; border: 0;
+    font-size: 11px; font-weight: 800; letter-spacing: 0.04em;
+    text-transform: uppercase; padding: 5px 10px; border-radius: 6px;
+    cursor: pointer; font-family: Outfit, sans-serif;
+  }
+  .copy.done { background: #047857; }
+  .note { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; margin-top: 24px; }
+  a { color: var(--blue); }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="eyebrow">Free Masterclass · Week 1 · Pulse for Zoom admin</div>
+    <h1>Two Pulses. Preload both. Launch on Dejan’s line.</h1>
+    <p class="lede">Only these two. Single choice. Anonymous. Share results after you close. Do not build them live. Do not add a third.</p>
+
+    <div class="tldr">
+      <div class="k">For the admin</div>
+      <p>Session: Week 1 Free Masterclass. Instructor: Dejan Krstic. First session Thursday 3 September 2026.</p>
+      <p>Preload both Pulses on the Zoom before the hour. Dejan will say the question out loud. You launch. 15 seconds. Close. Share the split on screen. He talks from that. Then you sit.</p>
+    </div>
+
+    <div class="pulse">
+      <div class="id">Pulse 1 · MC-W1-01</div>
+      <h3>Last skip</h3>
+      <dl class="meta">
+        <dt>Type</dt><dd>Single choice</dd>
+        <dt>Anonymous</dt><dd>Yes</dd>
+        <dt>Share results</dt><dd>Yes, after close</dd>
+        <dt>Open for</dt><dd>About 15 seconds</dd>
+      </dl>
+      <div class="q">Last time you skipped a workout, what was it?</div>
+      <ul class="opts">
+        <li><span>A</span>Time</li>
+        <li><span>B</span>No gym / no equipment</li>
+        <li><span>C</span>I didn’t know what to do</li>
+      </ul>
+      <p class="when"><b>Launch when Dejan says:</b> “Be honest. Last time you skipped a workout: was it time, no gym, or you just didn’t know what to do?”</p>
+      <p class="when" style="margin-top:6px"><b>Then:</b> close, share the split, stop. He pastes the hypothesis. Do not discuss the answers.</p>
+    </div>
+
+    <div class="pulse">
+      <div class="id">Pulse 2 · MC-W1-02</div>
+      <h3>Ship or catch</h3>
+      <dl class="meta">
+        <dt>Type</dt><dd>Single choice</dd>
+        <dt>Anonymous</dt><dd>Yes</dd>
+        <dt>Share results</dt><dd>Yes, after close</dd>
+        <dt>Open for</dt><dd>About 15 seconds</dd>
+      </dl>
+      <div class="q">Would you have shipped that?</div>
+      <ul class="opts">
+        <li><span>1</span>Yes, ship it</li>
+        <li><span>2</span>I’d catch it</li>
+      </ul>
+      <p class="when"><b>Launch when Dejan says:</b> “Would you have shipped that?”</p>
+      <p class="when" style="margin-top:6px"><b>Then:</b> close, share the split, stop. This is the ship decision. He pastes the eval from the split. Do not add a comment in chat.</p>
+    </div>
+
+    <div class="card">
+      <h3>Do not Pulse</h3>
+      <ul>
+        <li>The board (next hypothesis). That needs their words in chat.</li>
+        <li>The missed eval. Three lines in chat.</li>
+        <li>Lovable links. Chat.</li>
+        <li>Who wants the stage. Hands.</li>
+        <li>What people typed in their product. Their board, not a survey.</li>
+      </ul>
+    </div>
+
+    <h2>Slack paste for the admin</h2>
+    <div class="paste" data-copy>
+      <div class="pl">Copy this <button class="copy" type="button">Copy</button></div>
+      <pre>Week 1 Free Masterclass · two Pulses to preload. Dejan Krstic. Thu 3 Sep.
+
+Only these two. Single choice. Anonymous. Share results after close. ~15 seconds. Do not add a third. Do not build them live.
+
+Pulse 1 · MC-W1-01 Last skip
+Question: Last time you skipped a workout, what was it?
+A. Time
+B. No gym / no equipment
+C. I didn’t know what to do
+Launch when Dejan says: “Be honest. Last time you skipped a workout: was it time, no gym, or you just didn’t know what to do?”
+Then close, share the split, stop. He pastes the hypothesis.
+
+Pulse 2 · MC-W1-02 Ship or catch
+Question: Would you have shipped that?
+1. Yes, ship it
+2. I’d catch it
+Launch when Dejan says: “Would you have shipped that?”
+Then close, share the split, stop. He pastes the eval.
+
+Do not Pulse: the board, the evals, Lovable links, who wants the stage.</pre>
+    </div>
+
+    <p class="note">Hour shape for Lisa: <a href="masterclass-week1.html">masterclass-week1.html</a>. Zoom CSV import (same two Pulses): <a href="masterclass-week1-pulse.csv">masterclass-week1-pulse.csv</a>.</p>
+  </div>
+<script>
+document.querySelectorAll("[data-copy]").forEach((box) => {
+  const btn = box.querySelector(".copy");
+  const pre = box.querySelector("pre");
+  btn.addEventListener("click", async () => {
+    await navigator.clipboard.writeText(pre.textContent);
+    btn.textContent = "Copied";
+    btn.classList.add("done");
+    setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1600);
+  });
+});
+</script>
+</body>
+</html>
