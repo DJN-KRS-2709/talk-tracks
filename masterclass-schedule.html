@@ -79,6 +79,9 @@
   }
   tbody td { padding: 11px 14px; border-top: 1px solid var(--line); }
   tbody tr.flag { background: var(--amber-soft); }
+  tbody tr.skip { background: #F1EDE4; color: var(--muted); }
+  tbody tr.skip s { text-decoration-thickness: 1px; }
+  .tag.off { background: var(--muted); }
   td.n { color: var(--blue); font-weight: 700; width: 40px; }
   td.dt { font-weight: 600; white-space: nowrap; }
   td.iso {
@@ -132,13 +135,14 @@
 <body>
   <div class="page">
     <div class="eyebrow">Free Masterclass · Weekly series · For Salesforce</div>
-    <h1>Twelve Thursdays. Same time every week.</h1>
+    <h1>Ten Thursdays. Same time every week.</h1>
     <p class="lede">Same 60-minute live build every session, so nothing changes week to week except the promo angle. Dates below are ready to bulk-load.</p>
 
     <div class="tldr">
       <div class="k">The slot</div>
-      <p>Every Thursday, 09:00 Pacific, for 60 minutes. Instructor: Dejan Krstic. Twelve sessions, 3 September through 19 November 2026.</p>
-      <p>The Pacific and Eastern times are identical across all twelve weeks, so the advertised US time never changes. One week, 29 October, the European clock differs. See the note below.</p>
+      <p>Every Thursday, 09:00 Pacific, for 60 minutes. Instructor: Dejan Krstic. Ten sessions, 3 September through 19 November 2026.</p>
+      <p>Two Thursdays in that span are skipped, 10 September and 8 October. They are listed below so it is clear they are deliberate and not missing rows.</p>
+      <p>The Pacific and Eastern times are identical on every date, so the advertised US time never changes. One week, 29 October, the European clock differs. See the note below.</p>
     </div>
 
     <div class="slot">
@@ -148,28 +152,33 @@
       <div><div class="lb">Duration</div><div class="vl">60 min</div></div>
     </div>
 
-    <h2>The twelve dates</h2>
+    <h2>The ten dates</h2>
     <table>
       <thead>
         <tr><th>#</th><th>Date</th><th>ISO</th><th>PT</th><th>ET</th><th>CET</th></tr>
       </thead>
       <tbody>
         <tr><td class="n">1</td><td class="dt">Thu 3 Sep 2026</td><td class="iso">2026-09-03</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
-        <tr><td class="n">2</td><td class="dt">Thu 10 Sep 2026</td><td class="iso">2026-09-10</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
-        <tr><td class="n">3</td><td class="dt">Thu 17 Sep 2026</td><td class="iso">2026-09-17</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
-        <tr><td class="n">4</td><td class="dt">Thu 24 Sep 2026</td><td class="iso">2026-09-24</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
-        <tr><td class="n">5</td><td class="dt">Thu 1 Oct 2026</td><td class="iso">2026-10-01</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
-        <tr><td class="n">6</td><td class="dt">Thu 8 Oct 2026</td><td class="iso">2026-10-08</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
-        <tr><td class="n">7</td><td class="dt">Thu 15 Oct 2026</td><td class="iso">2026-10-15</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
-        <tr><td class="n">8</td><td class="dt">Thu 22 Oct 2026</td><td class="iso">2026-10-22</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
-        <tr class="flag"><td class="n">9</td><td class="dt">Thu 29 Oct 2026<span class="tag">Clock</span></td><td class="iso">2026-10-29</td><td>09:00</td><td>12:00</td><td><b>17:00</b></td></tr>
-        <tr><td class="n">10</td><td class="dt">Thu 5 Nov 2026</td><td class="iso">2026-11-05</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
-        <tr><td class="n">11</td><td class="dt">Thu 12 Nov 2026</td><td class="iso">2026-11-12</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
-        <tr><td class="n">12</td><td class="dt">Thu 19 Nov 2026</td><td class="iso">2026-11-19</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr class="skip"><td class="n">&ndash;</td><td class="dt"><s>Thu 10 Sep 2026</s><span class="tag off">No session</span></td><td class="iso">2026-09-10</td><td colspan="3">Hackathon</td></tr>
+        <tr><td class="n">2</td><td class="dt">Thu 17 Sep 2026</td><td class="iso">2026-09-17</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">3</td><td class="dt">Thu 24 Sep 2026</td><td class="iso">2026-09-24</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">4</td><td class="dt">Thu 1 Oct 2026</td><td class="iso">2026-10-01</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr class="skip"><td class="n">&ndash;</td><td class="dt"><s>Thu 8 Oct 2026</s><span class="tag off">No session</span></td><td class="iso">2026-10-08</td><td colspan="3">ProductCon</td></tr>
+        <tr><td class="n">5</td><td class="dt">Thu 15 Oct 2026</td><td class="iso">2026-10-15</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">6</td><td class="dt">Thu 22 Oct 2026</td><td class="iso">2026-10-22</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr class="flag"><td class="n">7</td><td class="dt">Thu 29 Oct 2026<span class="tag">Clock</span></td><td class="iso">2026-10-29</td><td>09:00</td><td>12:00</td><td><b>17:00</b></td></tr>
+        <tr><td class="n">8</td><td class="dt">Thu 5 Nov 2026</td><td class="iso">2026-11-05</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">9</td><td class="dt">Thu 12 Nov 2026</td><td class="iso">2026-11-12</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">10</td><td class="dt">Thu 19 Nov 2026</td><td class="iso">2026-11-19</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
       </tbody>
     </table>
 
-    <h2>Two things to know</h2>
+    <h2>Three things to know</h2>
+
+    <div class="card">
+      <h3>The two Thursdays with no session</h3>
+      <p>10 September is a hackathon and 8 October is ProductCon, so those two weeks are off. Everything either side keeps the same slot, which leaves a two week gap in each case rather than a moved session. Nothing shifts date or time to compensate.</p>
+    </div>
 
     <div class="card warn">
       <h3>29 October, the one clock week</h3>
@@ -179,7 +188,7 @@
 
     <div class="card">
       <h3>Why it stops on 19 November</h3>
-      <p>The next Thursday after that is 26 November, which is Thanksgiving in the US. Twelve sessions land neatly just before it. Happy to extend into December once we see how the first few go.</p>
+      <p>The next Thursday after that is 26 November, which is Thanksgiving in the US. The run lands neatly just before it. If we want to get back to twelve sessions, the two to add are 3 and 10 December, both clear.</p>
     </div>
 
     <h2>Bulk upload</h2>
@@ -188,14 +197,12 @@
     <h2>Reply to send</h2>
     <div class="paste" data-copy>
       <div class="pl">Slack paste <button class="copy" type="button">Copy</button></div>
-      <pre>Yes, here you go. Weekly, every Thursday, 09:00 PT / 12:00 ET, 60 minutes. Twelve sessions, 3 Sep through 19 Nov.
+      <pre>Yes, here you go. Weekly, every Thursday, 09:00 PT / 12:00 ET, 60 minutes. Ten sessions, 3 Sep through 19 Nov.
 
 2026-09-03
-2026-09-10
 2026-09-17
 2026-09-24
 2026-10-01
-2026-10-08
 2026-10-15
 2026-10-22
 2026-10-29
@@ -203,19 +210,21 @@
 2026-11-12
 2026-11-19
 
-Two things worth knowing:
+Three things worth knowing:
 
-1. I anchored the times to the US clock, so 09:00 PT / 12:00 ET is correct on all twelve dates. Europe and the US change clocks a week apart at the end of October, so on 29 Oct I run it an hour earlier my time. Nothing changes on your side and there is no exception to load.
+1. Two Thursdays are deliberately not in that list. 10 Sep I am at a hackathon and 8 Oct is ProductCon. Rather than move those sessions I just skip the week, so every session that does run is on the same day at the same time.
 
-2. It stops at 19 Nov because the next Thursday is Thanksgiving. Happy to keep going into December once we see how the first few land.
+2. I anchored the times to the US clock, so 09:00 PT / 12:00 ET is correct on every date. Europe and the US change clocks a week apart at the end of October, so on 29 Oct I run it an hour earlier my time. Nothing changes on your side and there is no exception to load.
+
+3. It stops at 19 Nov because the next Thursday is Thanksgiving. If you want the full twelve, 3 and 10 Dec are both clear and I am happy to add them, just say the word.
 
 Everything is on one page, including a CSV you can bulk load: https://djn-krs-2709.github.io/talk-tracks/masterclass-schedule.html
 
-I have not seen your workshop and ProductCon calendar yet, so I have not checked these against it. Send it over and I will move anything that clashes.</pre>
+If anything else on your workshop calendar clashes with these ten, send it over and I will move around it.</pre>
     </div>
     <div class="card" style="margin-top:14px">
       <h3>Before you send</h3>
-      <p>The last line is honest but soft. If you paste her calendar to me first, I will diff it against these twelve dates and rewrite that line to say checked, no clashes, which saves a round trip.</p>
+      <p>Your two known clashes, the hackathon and ProductCon, are already out. The closing line only covers the rest of her workshop calendar, which I have not seen. If she sends it and something else collides, it is a one line fix.</p>
     </div>
 
     <p class="note">Hour shape and what happens in the session: <a href="masterclass-week1.html">masterclass-week1.html</a>. Two Zoom polls to preload, same every week: <a href="masterclass-week1-pulse.html">masterclass-week1-pulse.html</a>.</p>

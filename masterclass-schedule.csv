@@ -1,13 +1,11 @@
 Session,Date,Day,Start PT,Start ET,Start CET,Duration Minutes,Title,Instructor,Format,Notes
 1,2026-09-03,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
-2,2026-09-10,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
-3,2026-09-17,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
-4,2026-09-24,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
-5,2026-10-01,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
-6,2026-10-08,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
-7,2026-10-15,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
-8,2026-10-22,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
-9,2026-10-29,Thursday,09:00,12:00,17:00,60,Free Masterclass,Dejan Krstic,Live online,US and EU clocks out of step this week. US times unchanged.
-10,2026-11-05,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
-11,2026-11-12,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
-12,2026-11-19,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,Last of the run. Next Thursday is Thanksgiving.
+2,2026-09-17,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,No session 10 Sep. Hackathon.
+3,2026-09-24,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
+4,2026-10-01,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
+5,2026-10-15,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,No session 8 Oct. ProductCon.
+6,2026-10-22,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
+7,2026-10-29,Thursday,09:00,12:00,17:00,60,Free Masterclass,Dejan Krstic,Live online,US and EU clocks out of step this week. US times unchanged.
+8,2026-11-05,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
+9,2026-11-12,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,
+10,2026-11-19,Thursday,09:00,12:00,18:00,60,Free Masterclass,Dejan Krstic,Live online,Last of the run. Next Thursday is Thanksgiving.

@@ -6,23 +6,24 @@ beats, same two Zoom polls. Only the promo angle moves, and it never repeats.
 Written and read by the `masterclass-weekly-angle` skill. Check this file before
 proposing an angle, append to it only after Dejan picks one.
 
-Schedule and all twelve dates: [masterclass-schedule.html](masterclass-schedule.html).
+Schedule and all dates: [masterclass-schedule.html](masterclass-schedule.html).
 Hour shape: [masterclass-week1.html](masterclass-week1.html).
+
+Ten sessions. No session on 10 Sep (hackathon) or 8 Oct (ProductCon), so there
+is no angle to pick in those two weeks.
 
 | Date | # | Angle | Hook used | Source |
 |---|---|---|---|---|
 | 2026-09-03 | 1 | Watch it built, then build yours | Watch it cooked. Then cook yours. | Series launch, no scan. Standing promo lines from masterclass-week1.html |
-| 2026-09-10 | 2 | | | |
-| 2026-09-17 | 3 | | | |
-| 2026-09-24 | 4 | | | |
-| 2026-10-01 | 5 | | | |
-| 2026-10-08 | 6 | | | |
-| 2026-10-15 | 7 | | | |
-| 2026-10-22 | 8 | | | |
-| 2026-10-29 | 9 | | | |
-| 2026-11-05 | 10 | | | |
-| 2026-11-12 | 11 | | | |
-| 2026-11-19 | 12 | | | |
+| 2026-09-17 | 2 | | | |
+| 2026-09-24 | 3 | | | |
+| 2026-10-01 | 4 | | | |
+| 2026-10-15 | 5 | | | |
+| 2026-10-22 | 6 | | | |
+| 2026-10-29 | 7 | | | |
+| 2026-11-05 | 8 | | | |
+| 2026-11-12 | 9 | | | |
+| 2026-11-19 | 10 | | | |
 
 ## Standing lines, already used
 
