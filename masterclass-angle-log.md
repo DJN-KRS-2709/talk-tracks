@@ -9,8 +9,8 @@ proposing an angle, append to it only after Dejan picks one.
 Schedule and all dates: [masterclass-schedule.html](masterclass-schedule.html).
 Hour shape: [masterclass-week1.html](masterclass-week1.html).
 
-Ten sessions. No session on 10 Sep (hackathon) or 8 Oct (ProductCon), so there
-is no angle to pick in those two weeks.
+Twelve sessions. No session on 10 Sep (hackathon), 8 Oct (ProductCon), or
+26 Nov (Thanksgiving), so there is no angle to pick in those three weeks.
 
 | Date | # | Angle | Hook used | Source |
 |---|---|---|---|---|
@@ -24,6 +24,8 @@ is no angle to pick in those two weeks.
 | 2026-11-05 | 8 | | | |
 | 2026-11-12 | 9 | | | |
 | 2026-11-19 | 10 | | | |
+| 2026-12-03 | 11 | | | |
+| 2026-12-10 | 12 | | | |
 
 ## Standing lines, already used
 
