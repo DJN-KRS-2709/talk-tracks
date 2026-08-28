@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Masterclass · Weekly schedule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #07162C;
+    --ink: #12213A;
+    --paper: #F6F1E8;
+    --card: #FFFbf5;
+    --line: #E4D9C8;
+    --blue: #2F6FED;
+    --blue-soft: #E8EEFC;
+    --muted: #5C6574;
+    --amber: #B45309;
+    --amber-soft: #FDF4E3;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Outfit, system-ui, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 860px; margin: 0 auto; padding: 36px 24px 80px; }
+  .eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 10px;
+  }
+  h1 {
+    font-family: Fraunces, Georgia, serif; font-weight: 650;
+    font-size: clamp(32px, 5vw, 46px); line-height: 1.12;
+    letter-spacing: -0.02em; margin-bottom: 14px;
+  }
+  .lede { font-size: 18px; color: var(--muted); max-width: 60ch; margin-bottom: 28px; }
+  .tldr {
+    background: var(--navy); color: #F6F1E8; border-radius: 18px;
+    padding: 26px 28px; margin-bottom: 28px;
+  }
+  .tldr .k {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: #9BB4F0; margin-bottom: 10px;
+  }
+  .tldr p { font-size: 16px; line-height: 1.5; }
+  .tldr p + p { margin-top: 10px; }
+  .slot {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 640px) { .slot { grid-template-columns: 1fr 1fr; } }
+  .slot div {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 14px 16px;
+  }
+  .slot .lb {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 4px;
+  }
+  .slot .vl { font-size: 19px; font-weight: 700; }
+  h2 {
+    font-family: Fraunces, Georgia, serif; font-size: 22px;
+    font-weight: 650; margin: 26px 0 14px;
+  }
+  table {
+    width: 100%; border-collapse: collapse;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; overflow: hidden; font-size: 15px;
+  }
+  thead th {
+    background: var(--navy); color: #F6F1E8; text-align: left;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 11px 14px;
+  }
+  tbody td { padding: 11px 14px; border-top: 1px solid var(--line); }
+  tbody tr.flag { background: var(--amber-soft); }
+  td.n { color: var(--blue); font-weight: 700; width: 40px; }
+  td.dt { font-weight: 600; white-space: nowrap; }
+  td.iso {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 13px; color: var(--muted);
+  }
+  .tag {
+    display: inline-block; background: var(--amber); color: #fff;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 2px 7px; border-radius: 5px;
+    margin-left: 6px; vertical-align: middle;
+  }
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 18px; margin-bottom: 14px;
+  }
+  .card.warn { background: var(--amber-soft); border-color: #F0DDB0; }
+  .card h3 {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 8px;
+  }
+  .card.warn h3 { color: var(--amber); }
+  .card p + p { margin-top: 8px; }
+  .card ul { padding-left: 18px; font-size: 14.5px; margin-top: 6px; }
+  .card li + li { margin-top: 6px; }
+  .paste {
+    background: #0c0c0d; color: #e8e8ea; border-radius: 12px;
+    padding: 14px 16px; margin: 12px 0 0; position: relative;
+  }
+  .paste .pl {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #7aa7ff; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .paste pre {
+    white-space: pre-wrap; word-break: break-word;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 13px; line-height: 1.55;
+  }
+  .copy {
+    margin-left: auto; background: #2563eb; color: #fff; border: 0;
+    font-size: 11px; font-weight: 800; letter-spacing: 0.04em;
+    text-transform: uppercase; padding: 5px 10px; border-radius: 6px;
+    cursor: pointer; font-family: Outfit, sans-serif;
+  }
+  .copy.done { background: #047857; }
+  .note { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; margin-top: 24px; }
+  a { color: var(--blue); }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="eyebrow">Free Masterclass · Weekly series · For Salesforce</div>
+    <h1>Twelve Thursdays. Same time every week.</h1>
+    <p class="lede">Same 60-minute live build every session, so nothing changes week to week except the promo angle. Dates below are ready to bulk-load.</p>
+
+    <div class="tldr">
+      <div class="k">The slot</div>
+      <p>Every Thursday, 09:00 Pacific, for 60 minutes. Instructor: Dejan Krstic. Twelve sessions, 3 September through 19 November 2026.</p>
+      <p>The Pacific and Eastern times are identical across all twelve weeks, so the advertised US time never changes. One week, 29 October, the European clock differs. See the note below.</p>
+    </div>
+
+    <div class="slot">
+      <div><div class="lb">Day</div><div class="vl">Thursday</div></div>
+      <div><div class="lb">Pacific</div><div class="vl">09:00</div></div>
+      <div><div class="lb">Eastern</div><div class="vl">12:00</div></div>
+      <div><div class="lb">Duration</div><div class="vl">60 min</div></div>
+    </div>
+
+    <h2>The twelve dates</h2>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Date</th><th>ISO</th><th>PT</th><th>ET</th><th>CET</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="n">1</td><td class="dt">Thu 3 Sep 2026</td><td class="iso">2026-09-03</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">2</td><td class="dt">Thu 10 Sep 2026</td><td class="iso">2026-09-10</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">3</td><td class="dt">Thu 17 Sep 2026</td><td class="iso">2026-09-17</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">4</td><td class="dt">Thu 24 Sep 2026</td><td class="iso">2026-09-24</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">5</td><td class="dt">Thu 1 Oct 2026</td><td class="iso">2026-10-01</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">6</td><td class="dt">Thu 8 Oct 2026</td><td class="iso">2026-10-08</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">7</td><td class="dt">Thu 15 Oct 2026</td><td class="iso">2026-10-15</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">8</td><td class="dt">Thu 22 Oct 2026</td><td class="iso">2026-10-22</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr class="flag"><td class="n">9</td><td class="dt">Thu 29 Oct 2026<span class="tag">Clock</span></td><td class="iso">2026-10-29</td><td>09:00</td><td>12:00</td><td><b>17:00</b></td></tr>
+        <tr><td class="n">10</td><td class="dt">Thu 5 Nov 2026</td><td class="iso">2026-11-05</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">11</td><td class="dt">Thu 12 Nov 2026</td><td class="iso">2026-11-12</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+        <tr><td class="n">12</td><td class="dt">Thu 19 Nov 2026</td><td class="iso">2026-11-19</td><td>09:00</td><td>12:00</td><td>18:00</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Two things to know</h2>
+
+    <div class="card warn">
+      <h3>29 October, the one clock week</h3>
+      <p>Europe puts its clocks back on Sunday 25 October. The US does not until Sunday 1 November. For the Thursday in between, the two are out of step by an hour.</p>
+      <p>The series is anchored to the US clock, so <b>09:00 Pacific and 12:00 Eastern stay correct on every single date</b>, including this one. Nothing to change in Salesforce, and nothing to re-announce. Dejan runs that one session at 17:00 his time instead of 18:00.</p>
+    </div>
+
+    <div class="card">
+      <h3>Why it stops on 19 November</h3>
+      <p>The next Thursday after that is 26 November, which is Thanksgiving in the US. Twelve sessions land neatly just before it. Happy to extend into December once we see how the first few go.</p>
+    </div>
+
+    <h2>Bulk upload</h2>
+    <p class="lede" style="margin-bottom:14px">CSV with one row per session: <a href="masterclass-schedule.csv">masterclass-schedule.csv</a>. Column names are a first guess, so say the word if Salesforce wants them shaped differently and I will resend.</p>
+
+    <h2>Reply to send</h2>
+    <div class="paste" data-copy>
+      <div class="pl">Slack paste <button class="copy" type="button">Copy</button></div>
+      <pre>Yes, here you go. Weekly, every Thursday, 09:00 PT / 12:00 ET, 60 minutes. Twelve sessions, 3 Sep through 19 Nov.
+
+2026-09-03
+2026-09-10
+2026-09-17
+2026-09-24
+2026-10-01
+2026-10-08
+2026-10-15
+2026-10-22
+2026-10-29
+2026-11-05
+2026-11-12
+2026-11-19
+
+Two things worth knowing:
+
+1. I anchored the times to the US clock, so 09:00 PT / 12:00 ET is correct on all twelve dates. Europe and the US change clocks a week apart at the end of October, so on 29 Oct I run it an hour earlier my time. Nothing changes on your side and there is no exception to load.
+
+2. It stops at 19 Nov because the next Thursday is Thanksgiving. Happy to keep going into December once we see how the first few land.
+
+Everything is on one page, including a CSV you can bulk load: https://djn-krs-2709.github.io/talk-tracks/masterclass-schedule.html
+
+I have not seen your workshop and ProductCon calendar yet, so I have not checked these against it. Send it over and I will move anything that clashes.</pre>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>Before you send</h3>
+      <p>The last line is honest but soft. If you paste her calendar to me first, I will diff it against these twelve dates and rewrite that line to say checked, no clashes, which saves a round trip.</p>
+    </div>
+
+    <p class="note">Hour shape and what happens in the session: <a href="masterclass-week1.html">masterclass-week1.html</a>. Two Zoom polls to preload, same every week: <a href="masterclass-week1-pulse.html">masterclass-week1-pulse.html</a>.</p>
+  </div>
+<script>
+document.querySelectorAll("[data-copy]").forEach((box) => {
+  const btn = box.querySelector(".copy");
+  const pre = box.querySelector("pre");
+  btn.addEventListener("click", async () => {
+    await navigator.clipboard.writeText(pre.textContent);
+    btn.textContent = "Copied";
+    btn.classList.add("done");
+    setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1600);
+  });
+});
+</script>
+</body>
+</html>
