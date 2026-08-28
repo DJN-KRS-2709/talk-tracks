@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Masterclass · AI Evals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #07162C;
+    --ink: #12213A;
+    --paper: #F6F1E8;
+    --card: #FFFbf5;
+    --line: #E4D9C8;
+    --blue: #2F6FED;
+    --blue-soft: #E8EEFC;
+    --muted: #5C6574;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Outfit, system-ui, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 36px 24px 80px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: Fraunces, Georgia, serif;
+    font-weight: 650;
+    font-size: clamp(32px, 5vw, 46px);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 58ch;
+    margin-bottom: 28px;
+  }
+  .tldr {
+    background: var(--navy);
+    color: #F6F1E8;
+    border-radius: 18px;
+    padding: 26px 28px;
+    margin-bottom: 32px;
+  }
+  .tldr .k {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #9BB4F0;
+    margin-bottom: 10px;
+  }
+  .tldr p { font-size: 17px; line-height: 1.5; }
+  .tldr p + p { margin-top: 10px; }
+  h2 {
+    font-family: Fraunces, Georgia, serif;
+    font-size: 22px;
+    font-weight: 650;
+    margin: 8px 0 14px;
+  }
+  .h2sub { color: var(--muted); font-size: 15px; margin: -8px 0 16px; }
+  .beats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  .beat {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 14px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .n {
+    font-family: Fraunces, Georgia, serif;
+    font-size: 22px;
+    color: var(--blue);
+    line-height: 1.1;
+  }
+  .beat h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .beat p { font-size: 14.5px; color: var(--muted); }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .card h3 {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .card ul { padding-left: 18px; font-size: 14.5px; }
+  .card li + li { margin-top: 6px; }
+  .lines { margin-bottom: 28px; }
+  .line {
+    background: var(--blue-soft);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 12px 12px 0;
+    padding: 12px 16px;
+    font-size: 15.5px;
+    margin-bottom: 8px;
+  }
+  .field { margin-bottom: 14px; }
+  .field .fl {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 6px;
+  }
+  .paste {
+    background: #0c0c0d; color: #e8e8ea; border-radius: 12px;
+    padding: 14px 16px; position: relative;
+  }
+  .paste .pl {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #7aa7ff; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .paste pre {
+    white-space: pre-wrap; word-break: break-word;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 13px; line-height: 1.6;
+  }
+  .copy {
+    margin-left: auto; background: #2563eb; color: #fff; border: 0;
+    font-size: 11px; font-weight: 800; letter-spacing: 0.04em;
+    text-transform: uppercase; padding: 5px 10px; border-radius: 6px;
+    cursor: pointer; font-family: Outfit, sans-serif;
+  }
+  .copy.done { background: #047857; }
+  .note {
+    font-size: 13.5px;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+  a { color: var(--blue); }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="eyebrow">Free Masterclass · Thursday 17 September · 60 minutes</div>
+    <h1>It passed every test he could think of. The room broke it in five minutes.</h1>
+    <p class="lede">No slide deck. Dejan builds a live AI product, tries it, and it behaves. Then the whole room hits it from their phones and the log fills with things nobody predicted. They judge the real traces together, discover they do not agree, and write one eval from a failure that was actually there. Sales takes the close.</p>
+
+    <div class="tldr">
+      <div class="k">TLDR</div>
+      <p>A product gets built from one sentence, on screen, from nothing. Dejan tries it and it behaves. That is the trap: it passed the test of the person who built it. Then the room scans a QR and hits it all at once, and within minutes the log is full of inputs he would never have typed.</p>
+      <p>They open the log together. Nobody knows what is in it, including Dejan. Everyone judges real traces from their phone, pass or fail. The results come back split: the same output, half the room says fine, half says that should never have shipped. That disagreement is the whole lesson. If forty people cannot agree, a model has no chance, which is why the criterion has to be written down. One eval goes in, gets pushed live, and holds.</p>
+      <p>Promise of the hour: you stop guessing what your AI gets wrong, you go and look, and you leave having written one eval from a failure you did not predict.</p>
+    </div>
+
+    <h2>Shape of the hour</h2>
+    <div class="beats">
+      <div class="beat">
+        <div class="n">01</div>
+        <div>
+          <h3>The story</h3>
+          <p>Everyone tests their own AI feature by typing a few things they can imagine. Poll: have you shipped AI that said something you would be embarrassed by? Yes, no, or we never looked. The third answer usually wins, and that is the hour.</p>
+        </div>
+      </div>
+      <div class="beat">
+        <div class="n">02</div>
+        <div>
+          <h3>Build it from one sentence</h3>
+          <p>A money coach. Tell it what is true right now, it gives you one concrete move you can make this week. Same method as always: the hypothesis is the product, the code is the test. Built live, on the share.</p>
+        </div>
+      </div>
+      <div class="beat">
+        <div class="n">03</div>
+        <div>
+          <h3>It behaves. That is the problem.</h3>
+          <p>Dejan tries the things he would think of. It handles them. It passes his test. Nothing visibly breaks, and that is exactly why he ships it, and exactly why this is different from watching someone poke a product until it falls over.</p>
+        </div>
+      </div>
+      <div class="beat">
+        <div class="n">04</div>
+        <div>
+          <h3>Phones out. Break it.</h3>
+          <p>QR on the live product. The whole room hits it at once with their own money situations. Real inputs, real outputs, piling up in a log none of us has seen.</p>
+        </div>
+      </div>
+      <div class="beat">
+        <div class="n">05</div>
+        <div>
+          <h3>Open the log</h3>
+          <p>First honest look. Investment questions it should have refused. Someone in genuine trouble. A confidently wrong number. Things nobody in the room would have thought to test for, because you cannot imagine your way to other people.</p>
+        </div>
+      </div>
+      <div class="beat">
+        <div class="n">06</div>
+        <div>
+          <h3>Everyone judges · Level 10</h3>
+          <p>Traces go out to phones. Pass or fail, tap through a few each. Not a demo of judging, they actually do it, on outputs their own room produced two minutes ago.</p>
+        </div>
+      </div>
+      <div class="beat">
+        <div class="n">07</div>
+        <div>
+          <h3>The room disagrees · Level 10</h3>
+          <p>Results ranked by how evenly the room split. Top of the board is one output where it is roughly half and half. Nobody planned which one. Same words, one group says helpful, the other says that is advice we cannot give. That is why you write the criterion down.</p>
+        </div>
+      </div>
+      <div class="beat">
+        <div class="n">08</div>
+        <div>
+          <h3>One eval, then theirs</h3>
+          <p>Take a failure everyone agreed on, write the eval, push it, prove it now refuses. Then they do the same on their own. Two people share what they found and what they wrote. Then he stops. Sales does the close.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>What they leave with</h3>
+        <ul>
+          <li>One eval they wrote themselves, from a real failure, live in a product</li>
+          <li>Proof that testing your own thing does not scale, felt rather than told</li>
+          <li>The difference between rules you imagine and failures you find</li>
+          <li>Why two sensible people disagree about the same output</li>
+          <li>A reason to look at traces on Monday instead of guessing</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What this is not</h3>
+        <ul>
+          <li>Not a talk about AI risk or safety</li>
+          <li>Not slides explaining why evals matter</li>
+          <li>Not a walkthrough of a finished product</li>
+          <li>Not a coding class</li>
+          <li>Not Dejan pre-picking the failure to make a point. He does not know what is in the log either.</li>
+          <li>Dejan does not do the sales pitch</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Hands-on, almost bulletproof</h3>
+        <ul>
+          <li>A phone is enough for every hands-on moment: using the product, judging traces, voting. Nothing to install, no account, nothing to redeem beforehand.</li>
+          <li>Small room, thin log: Dejan seeds it with traces from the previous session so there is always enough to judge.</li>
+          <li>If the room happens to agree on everything, he has one trace held back that reliably splits a room. The lesson never depends on luck.</li>
+          <li>Nobody has to share a screen or a link for the hour to work.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Sales bridge</h3>
+        <ul>
+          <li>You found a real failure and wrote a real eval, in an hour, on a product that was not yours.</li>
+          <li>The wall you hit at the end, the room disagreeing, is exactly what the course solves: how to write a criterion that holds, and how to prove a judge agrees with you.</li>
+          <li>Not “AI is risky, be careful.” You already found the risk yourself. This is how you do it at scale.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Lines for promo</h2>
+    <div class="lines">
+      <div class="line">It passed my test. That was the problem.</div>
+      <div class="line">Ship it. Then let a hundred people break it.</div>
+      <div class="line">You cannot write an eval for the failure you never imagined.</div>
+      <div class="line">Half the room said ship. Half said stop. Same output.</div>
+      <div class="line">Stop guessing what your AI gets wrong. Go and look.</div>
+      <div class="line">The failure you find beats the rule you invented.</div>
+    </div>
+
+    <h2>For the listing</h2>
+    <p class="h2sub">Ready to paste into Salesforce.</p>
+
+    <div class="field">
+      <div class="fl">Title</div>
+      <div class="paste" data-copy>
+        <div class="pl">Copy <button class="copy" type="button">Copy</button></div>
+        <pre>AI Evals for PMs: Find the Failure You Did Not Think Of</pre>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="fl">Short description · 45 words</div>
+      <div class="paste" data-copy>
+        <div class="pl">Copy <button class="copy" type="button">Copy</button></div>
+        <pre>You tested your AI feature by typing a few things you could think of. Then a real user typed something you could not. In this hour you will ship a live AI product, let the room break it, and write your first eval from a failure you did not predict.</pre>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="fl">Full description</div>
+      <div class="paste" data-copy>
+        <div class="pl">Copy <button class="copy" type="button">Copy</button></div>
+        <pre>Most AI features get tested by the person who built them. You type a handful of inputs you can imagine, it behaves, you ship. Then someone types the thing you never thought of and your product says something confident and wrong.
+
+In this session you will build a live AI product from a single sentence and put it straight in front of the room. Everyone hits it at once from their phones. Then we open the log together and look at what actually happened, which none of us can predict in advance.
+
+You will judge real traces as pass or fail alongside everyone else, and you will run into something uncomfortable: the room does not agree on what counts as a failure. That disagreement is the entire reason written evals exist.
+
+You will leave having written one eval from a real failure, pushed it into a live product, and watched it hold.</pre>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="fl">Who it is for</div>
+      <div class="paste" data-copy>
+        <div class="pl">Copy <button class="copy" type="button">Copy</button></div>
+        <pre>Product managers shipping anything with a model behind it, whether or not you write code. Nothing to install. A phone is enough to take part.</pre>
+      </div>
+    </div>
+
+    <p class="note">Live Zoom, 60 minutes, Thursday 17 September at 09:00 PT. Second session of the weekly series and a different hour from the first: same live-build shell, a different product and a different lesson. The product is a money coach, working name MoneyMove, one concrete money move from what is true for you right now. Money rather than fitness because the failures are sharper: advice it should refuse, someone in real trouble, and confident wrong numbers. Ads can stay generic (“ship it, then watch a room break it”) and name the product on the day. Attendees need a phone and nothing else. One open item: confirming which course the closing bridge points at, since the AI Evals refresh is not launched yet. All dates: <a href="masterclass-schedule.html">masterclass-schedule.html</a>. The first session: <a href="masterclass-week1.html">masterclass-week1.html</a>.</p>
+  </div>
+<script>
+document.querySelectorAll("[data-copy]").forEach((box) => {
+  const btn = box.querySelector(".copy");
+  const pre = box.querySelector("pre");
+  btn.addEventListener("click", async () => {
+    await navigator.clipboard.writeText(pre.textContent);
+    btn.textContent = "Copied";
+    btn.classList.add("done");
+    setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1600);
+  });
+});
+</script>
+</body>
+</html>
